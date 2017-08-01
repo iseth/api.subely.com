@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -11,7 +11,7 @@ class UserController extends Controller{
 
 	public function __construct(){
 
-		$this->middleware('oauth', ['except' => ['index', 'show']]);
+		$this->middleware('oauth');
 		$this->middleware('authorize:' . __CLASS__, ['except' => ['index', 'show']]);
 	}
 
@@ -78,7 +78,7 @@ class UserController extends Controller{
 	public function validateRequest(Request $request){
 
 		$rules = [
-			'email' => 'required|email|unique:users', 
+			'email' => 'required|email|unique:users',
 			'password' => 'required|min:6'
 		];
 

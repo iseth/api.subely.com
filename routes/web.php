@@ -24,6 +24,24 @@ $app->put('/posts/{post_id}', 'PostController@update');
 $app->patch('/posts/{post_id}', 'PostController@update');
 $app->delete('/posts/{post_id}', 'PostController@destroy');
 
+// dbxUsers
+$app->get('/dbxusers/get', 'dbxUserController@index');
+$app->post('/dbxusers/add', 'dbxUserController@store');
+$app->get('/dbxusers/{user_id}', 'dbxUserController@show');
+$app->put('/dbxusers/{user_id}', 'dbxUserController@update');
+$app->patch('/dbxusers/{user_id}', 'dbxUserController@update');
+$app->delete('/dbxusers/{user_id}', 'dbxUserController@destroy');
+$app->get('/dbxusers/verify/{user_token}', 'dbxUserController@verify');
+
+// Subs
+$app->get('/dbxusers/get/subs/{user_id}', 'SubsController@index');
+$app->get('/dbxusers/subs/get/{user_id}', 'SubsController@index');
+$app->post('/dbxusers/add/subs', 'SubsController@add');
+$app->post('/dbxusers/subs/add', 'SubsController@add');
+$app->get('/dbxusers/delete/sub/{sub_id}', 'SubsController@destroy');
+$app->get('/dbxusers/sub/delete/{sub_id}', 'SubsController@destroy');
+$app->get('/dbxusers/subs/list', 'SubsController@list');
+$app->get('/dbxusers/sub/verify/{sub_domain}', 'SubsController@verify');
 // Users
 $app->get('/users/', 'UserController@index');
 $app->post('/users/', 'UserController@store');

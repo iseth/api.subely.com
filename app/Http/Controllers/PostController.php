@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -10,7 +10,8 @@ class PostController extends Controller{
 
 	public function __construct(){
 
-		$this->middleware('oauth', ['except' => ['index', 'show']]);
+//		$this->middleware('oauth', ['except' => ['index', 'show']]);
+		$this->middleware('oauth');
 		$this->middleware('authorize:' . __CLASS__, ['except' => ['index', 'show', 'store']]);
 	}
 
@@ -82,7 +83,7 @@ class PostController extends Controller{
 	public function validateRequest(Request $request){
 
 		$rules = [
-			'title' => 'required', 
+			'title' => 'required',
 			'content' => 'required'
 		];
 

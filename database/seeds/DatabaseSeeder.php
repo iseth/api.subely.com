@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
 use App\User;
+use App\dbxUser;
 use App\Post;
 use App\Comment;
 
@@ -20,10 +21,12 @@ class DatabaseSeeder extends Seeder {
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
 		User::truncate();
+		dbxUser::truncate();
 		Post::truncate();
 		Comment::truncate();
 
 		factory(User::class, 10)->create();
+		factory(dbxUser::class, 10)->create();
 		factory(Post::class, 50)->create();
 		factory(Comment::class, 100)->create();
 

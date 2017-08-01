@@ -31,7 +31,13 @@ return [
         'password' => [
                 'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
                 'callback' => '\App\User@verify',
-                'access_token_ttl' => 3600
+                'access_token_ttl' => 36000
+                // 'limit_clients_to_grants' => true,
+            ],
+        'client_credentials' => [
+                'class' => '\League\OAuth2\Server\Grant\ClientCredentialsGrant',
+                'access_token_ttl' => 36000
+                // 'limit_clients_to_grants' => true,
             ]
     ],
 
@@ -47,7 +53,7 @@ return [
     |
     */
 
-    'token_type' => 'League\OAuth2\Server\TokenType\Bearer',
+    // 'token_type' => 'League\OAuth2\Server\TokenType\Bearer',
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +64,7 @@ return [
     |
     */
 
-    'state_param' => false,
+    // 'state_param' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -69,7 +75,7 @@ return [
     |
     */
 
-    'scope_param' => false,
+    // 'scope_param' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +86,7 @@ return [
     |
     */
 
-    'scope_delimiter' => ',',
+    // 'scope_delimiter' => ',',
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +97,7 @@ return [
     |
     */
 
-    'default_scope' => null,
+    // 'default_scope' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -103,7 +109,7 @@ return [
     |
     */
 
-    'access_token_ttl' => 3600,
+    // 'access_token_ttl' => 600,
 
     /*
     |--------------------------------------------------------------------------
@@ -115,7 +121,7 @@ return [
     |
     */
 
-    'limit_clients_to_grants' => false,
+    // 'limit_clients_to_grants' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -127,7 +133,7 @@ return [
     |
     */
 
-    'limit_clients_to_scopes' => false,
+    // 'limit_clients_to_scopes' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -139,7 +145,7 @@ return [
     |
     */
 
-    'limit_scopes_to_grants' => false,
+    // 'limit_scopes_to_grants' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -151,6 +157,6 @@ return [
     |
     */
 
-    'http_headers_only' => false,
+    // 'http_headers_only' => false,
 
 ];

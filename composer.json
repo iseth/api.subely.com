@@ -10,7 +10,9 @@
         "laravel/lumen-framework": "5.4.*",
         "vlucas/phpdotenv": "~2.2",
         "laravel/homestead": "^5.0",
-        "lucadegasperi/oauth2-server-laravel": "^5.2"
+        "lucadegasperi/oauth2-server-laravel": "^5.2",
+        "ramsey/uuid": "^3.6",
+        "palanik/lumen-cors": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
