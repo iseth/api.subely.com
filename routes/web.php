@@ -27,11 +27,12 @@ $app->delete('/posts/{post_id}', 'PostController@destroy');
 // dbxUsers
 $app->get('/dbxusers/get', 'dbxUserController@index');
 $app->post('/dbxusers/add', 'dbxUserController@store');
+$app->get('/dbxusers/verify/{user_token}', 'dbxUserController@verify');
+$app->get('/dbxusers/get/uid/{dbid}', 'dbxUserController@getuid');
 $app->get('/dbxusers/{user_id}', 'dbxUserController@show');
 $app->put('/dbxusers/{user_id}', 'dbxUserController@update');
 $app->patch('/dbxusers/{user_id}', 'dbxUserController@update');
 $app->delete('/dbxusers/{user_id}', 'dbxUserController@destroy');
-$app->get('/dbxusers/verify/{user_token}', 'dbxUserController@verify');
 
 // Subs
 $app->get('/dbxusers/get/subs/{user_id}', 'SubsController@index');

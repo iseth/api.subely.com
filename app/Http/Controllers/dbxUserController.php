@@ -48,8 +48,10 @@ class dbxUserController extends Controller{
 	}
 
 	public function show($id){
+		$user = dbxUser::where('uid', '=', $id)->first();
 
-		$user = dbxUser::find($id);
+		// $user = dbxUser::find($id);
+		return var_dump($user);
 
 		if(!$user){
 			return $this->error("The user with {$id} doesn't exist", 404);
@@ -134,34 +136,15 @@ class dbxUserController extends Controller{
 		return $this->success('verfied', 200);
 	}
 
-	public function getSubs($uid)	{
+	public function getuid($dbid='') {
+		$uid = dbxUser::where('dbid', '=', $dbid)->first(['uid']);
 
-		$subs = Subs::where('owner', '=', $uid)->first();
-
-		if(!$subs){
-			return $this->error("The user has no subs", 404);
+		if(!$uid){
+				return $this->error("The user with {$dbid} doesn't exist", 404);
 		}
-		return $this->success($subs, 200);
 
-	}
-	public function storeSubs(Request $request){
+		return $this->success($uid, 200);
 
-		$this->validateSubRequest($request);
-		$sub_id = Uuid::uuid4();
-
-		$sub = Subs::create([
-					'sub_id'							=> 		$sub_id,
-					'owner' 							=> 		$request->get('user_id'),
-					'sub_domain' 					=> 		$request->get('sub_domain'),
-					'domain' 							=> 		'domain',
-					'status'							=> 		'1',
-					'provider' 						=> 		$request->get('provider'),
-					'www' 								=> 		$request->get('www'),
-					'host'								=> 		'001',
-					'isActive' 						=> 		'0',
-				]);
-
-		return $this->success("The sub with with id {$sub->sub_id} has been created", 201);
 	}
 
 }
