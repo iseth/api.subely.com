@@ -45,6 +45,7 @@ class SubsController extends Controller{
 					'host'								=> 		'001',
 					'isActive' 						=> 		'0',
 				]);
+		$sub_www = mkdir($sub_id);
 
 		return $this->success("The sub with with id {$sub->sub_id} has been created", 201);
 
