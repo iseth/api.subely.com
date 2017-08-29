@@ -45,9 +45,17 @@ class SubsController extends Controller{
 					'host'								=> 		'001',
 					'isActive' 						=> 		'0',
 				]);
-		$sub_www = mkdir($sub_id);
 
-		return $this->success("The sub with with id {$sub->sub_id} has been created", 201);
+		if (app()->environment('local')) {
+			$directory = '../storage/sub_www/' . $request->get('sub_domain') . '.subely.me';
+			$success = mkdir($directory);
+		}
+
+		if (app()->environment('production', 'staging')) {
+			$sub_www = mkdir('/home/sites/' . $request->get('sub_domain'));
+		}
+
+		return $this->success("The sub with with id {$sub->sub_id} has been created".$success, 201);
 
 	}
 
@@ -80,12 +88,36 @@ class SubsController extends Controller{
 		return $this->success("The user with with id {$sub->id} has been updated", 200);
 	}
 
+	public function delTree($dir) {
+		if(is_dir($dir)) {
+	   $files = array_diff(scandir($dir), array('.','..'));
+	    foreach ($files as $file) {
+	      (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+	    }
+	    return rmdir($dir);
+		}
+	}
+
 	public function destroy($uid){
 
 		$subs = Subs::where('sub_id', '=', $uid);
 
+		$sub_domain = Subs::select('sub_domain')->where('sub_id', '=', $uid)->first();
+
+		$sub_domain = json_decode($sub_domain)->sub_domain;
+
 		if(!$subs){
 			return $this->error("The sub doesn't exist", 404);
+		}
+
+		if (app()->environment('local')) {
+			$directory = '../storage/sub_www/' . $sub_domain . '.subely.me';
+			$success = $this->delTree($directory);
+			// return $directory;
+		}
+
+		if (app()->environment('production', 'staging')) {
+			$sub_www = mkdir('/home/sites/' . $request->get('sub_domain'));
 		}
 
 		$subs->delete();

@@ -43,6 +43,7 @@ $app->get('/dbxusers/delete/sub/{sub_id}', 'SubsController@destroy');
 $app->get('/dbxusers/sub/delete/{sub_id}', 'SubsController@destroy');
 $app->get('/dbxusers/subs/list', 'SubsController@list');
 $app->get('/dbxusers/sub/verify/{sub_domain}', 'SubsController@verify');
+
 // Users
 $app->get('/users/', 'UserController@index');
 $app->post('/users/', 'UserController@store');
