@@ -70,7 +70,7 @@ class SubsController extends Controller{
 		}
 
 		if (app()->environment('production', 'staging')) {
-			$sub_www = mkdir('/home/sites/' . $request->get('sub_domain'));
+			$success = mkdir('/home/sites/' . $request->get('sub_domain'));
 
 			$client = new Client($dbxaccessToken);
 	    $adapter = new DropboxAdapter($client);
