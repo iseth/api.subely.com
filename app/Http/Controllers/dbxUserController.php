@@ -147,4 +147,14 @@ class dbxUserController extends Controller{
 
 	}
 
+	public function getToken($uid) {
+		$token = dbxUser::where('uid', '=', $uid)->first(['remember_token']);
+
+		if(!$token){
+				return "The user with {$uid} doesn't exist";
+		}
+
+		return( $token->remember_token );
+
+	}
 }

@@ -13,8 +13,12 @@
 
 // Home page
 $app->get('/', function () use ($app) {
-	return 'This';
+	return var_dump(env('DBX_APP_SECRET'));
 });
+
+// DBX Webhook
+$app->get('/webhook','WebhookController@webhookverify');
+$app->post('/webhook','WebhookController@webhook');
 
 // Posts
 $app->get('/posts','PostController@index');

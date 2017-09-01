@@ -13,11 +13,11 @@ use Spatie\FlysystemDropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
 
-class SubsController extends Controller{
+class WebhookController extends Controller{
 
 	public function __construct(){
 
-		$this->middleware('oauth', ['except' => ['verify']]);
+		// $this->middleware('oauth', ['except' => ['verify']]);
 		// $this->middleware('authorize:' . __CLASS__, ['except' => ['verify']]);
 	}
 
@@ -246,12 +246,12 @@ class SubsController extends Controller{
 	public function webhookverify(Request $request)
 	{
 
-		return var_dump($request->challenge);
+		return ($request->challenge);
 	}
 	public function webhook(Request $request)
 	{
-
-		return var_dump($request);
+    var_dump(file_put_contents("./test.log", file_get_contents('php://input'), FILE_APPEND));
+		return ($request);
 	}
 	public function list()
 	{
