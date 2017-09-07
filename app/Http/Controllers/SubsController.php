@@ -70,7 +70,12 @@ class SubsController extends Controller{
 		}
 
 		if (app()->environment('production', 'staging')) {
-			$success = mkdir('/home/sites/' . $request->get('sub_domain'));
+			$directory = '../storage/sub_www/' . $request->get('sub_domain') . '.subely.me';
+			$success = mkdir($directory);
+
+			$dbxUserController = new dbxUserController;
+			$dbxaccessToken = $dbxUserController->getToken($request->get('user_id'));
+
 
 			$client = new Client($dbxaccessToken);
 	    $adapter = new DropboxAdapter($client);
@@ -78,7 +83,7 @@ class SubsController extends Controller{
 	    $filesystem = new Filesystem($adapter);
 
 			var_dump($filesystem->createDir($request->get('sub_domain')));
-			$filesystem->write($directory . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
+			$filesystem->write($request->get('sub_domain') . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
 			// var_dump($filesystem->createDir('/secure'));
 			// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
 		}
@@ -158,7 +163,18 @@ class SubsController extends Controller{
 		}
 
 		if (app()->environment('production', 'staging')) {
-			$sub_www = mkdir('/home/sites/' . $sub_domain);
+			$directory = '../storage/sub_www/' . $sub_domain . '.subely.me';
+			$success = $this->delTree($directory);
+
+			$dbxUserController = new dbxUserController;
+ 			$dbxaccessToken = $dbxUserController->getToken($owner_uid);
+
+ 			$client = new Client($dbxaccessToken);
+ 	    $adapter = new DropboxAdapter($client);
+
+ 	    $filesystem = new Filesystem($adapter);
+
+ 			$filesystem->deleteDir($sub_domain);
 		}
 
 		$subs->delete();
