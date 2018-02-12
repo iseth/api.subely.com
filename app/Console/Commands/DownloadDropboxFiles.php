@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Console\Commands;
 
+use Illuminate\Console\Command;
 use App\Subs;
 use App\dbxUser;
+use App\Http\Controllers\dbxUserController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,73 +16,48 @@ use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
 use DB;
 
+class DownloadDropboxFiles extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'download:dropbox-files';
 
-class WebhookController extends Controller{
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Downloading the latest changes of dropbox user files';
 
-	public function __construct(){
-		// $this->middleware('oauth', ['except' => ['verify']]);
-		// $this->middleware('authorize:' . __CLASS__, ['except' => ['verify']]);
-	}
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function index($uid){
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
 
-		$subs = Subs::where('owner', '=', $uid)->get();
-
-		if(!$subs){
-			return $this->error("The user has no subs", 404);
-		}
-		return $this->success($subs, 200);
-	}
-
-	public function webhookverify(Request $request)
-	{
-
-		return ($request->challenge);
-	}
-	public function webhook(Request $request)
-	{
-
-		$data = file_get_contents('php://input');
-
-		$accounts = json_decode($data)->list_folder->accounts;
-
-		foreach ($accounts as $account) {
-		   $dbxuser = DB::table('dbxqueue')->where('dbid','=',$account)->first();
-		   	  if($dbxuser == null)
-		   	  {
-				DB::table('dbxqueue')->insert(
-				    ['dbid' => $account]
-				);
-			  }
-			  else
-			  {
-			  	DB::table('dbxqueue')->update(
-				    ['dbid' => $account,'status' => 0]
-				);
-			  }
-			
-			var_dump(file_put_contents("./test.log", $account));
-		}
-		
-
-		return ($request);
-	}
-	public function list()
-	{
-		$subs = Subs::all();
-		return $this->success($subs, 200);
-	}
-
-	public function dropboxChanges()
-	{
-		    $dbxusers = DB::table('dbxqueue')->get();
+    	$dbxusers = DB::table('dbxqueue')->get();
 
 			$check_dbxusers = count($dbxusers);
 
 			if($check_dbxusers != 0)
 			{
-
-			 foreach ($dbxusers as $key => $user) {
+			
+			foreach ($dbxusers as $key => $user) {
 
 			 if($user->status == 0)
 			 {
@@ -155,6 +132,6 @@ class WebhookController extends Controller{
 				return response()->json('No Users found in quene');
 			}
 
-	}
 
+    }
 }
