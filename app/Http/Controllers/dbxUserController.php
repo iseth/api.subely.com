@@ -17,7 +17,7 @@ class dbxUserController extends Controller{
 	public function __construct(){
 
 		$this->middleware('oauth', ['except' => ['verify']]);
-		// $this->middleware('authorize:' . __CLASS__, ['except' => ['verify']]);
+	   // $this->middleware('authorize:' . __CLASS__, ['except' => ['verify']]);
 	}
 
 	public function index(){
@@ -138,6 +138,7 @@ class dbxUserController extends Controller{
 
 	public function getuid($dbid='') {
 		$uid = dbxUser::where('dbid', '=', $dbid)->first(['uid']);
+
 
 		if(!$uid){
 				return $this->error("The user with {$dbid} doesn't exist", 404);

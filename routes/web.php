@@ -10,6 +10,7 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$app->group(['middleware' => 'headers'], function () use ($app) {
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -19,6 +20,8 @@ $app->get('/', function () use ($app) {
 // DBX Webhook
 $app->get('/webhook','WebhookController@webhookverify');
 $app->post('/webhook','WebhookController@webhook');
+
+$app->get('/fetch-dropbox-changes','WebhookController@dropboxChanges');
 
 // Posts
 $app->get('/posts','PostController@index');
@@ -70,4 +73,6 @@ $app->delete('/posts/{post_id}/comments/{comment_id}', 'PostCommentController@de
 // Request an access token
 $app->post('/oauth/access_token', function() use ($app){
     return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
+});
+
 });

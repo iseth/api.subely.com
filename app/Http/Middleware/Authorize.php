@@ -16,7 +16,7 @@ class Authorize {
         $controller = new $controller();
 
         if(!$controller->isAuthorized($request)){
-            return $controller->error("You aren't allowed to perform the requested action", 403);
+          return $controller->error("You aren't allowed to perform the requested action", 403);
         }
 
         return $next($request);
