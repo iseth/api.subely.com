@@ -75,4 +75,8 @@ $app->post('/oauth/access_token', function() use ($app){
     return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
 });
 
+
+// Route for stripe post request.
+$app->post('stripe', 'StripeController@postPaymentWithStripe');
+
 });
