@@ -43,7 +43,7 @@ class WebhookController extends Controller{
 		$data = file_get_contents('php://input');
 
 		$accounts = json_decode($data)->list_folder->accounts;
-
+		// Added by TMG
 		foreach ($accounts as $account) {
 		   $dbxuser = DB::table('dbxqueue')->where('dbid','=',$account)->first();
 		   	  if($dbxuser == null)
@@ -58,7 +58,7 @@ class WebhookController extends Controller{
 				    ['dbid' => $account,'status' => 0]
 				);
 			  }
-			
+			// EOF Added by TMG 
 			var_dump(file_put_contents("./test.log", $account));
 		}
 		
@@ -73,6 +73,7 @@ class WebhookController extends Controller{
 
 	public function dropboxChanges()
 	{
+		// Added by TMG fetch dropbox files of users with the latest update
 		    $dbxusers = DB::table('dbxqueue')->get();
 
 			$check_dbxusers = count($dbxusers);
@@ -152,8 +153,10 @@ class WebhookController extends Controller{
 			}
 			else
 			{
-				return response()->json('No Users found in quene');
+				return response()->json('No Users found in que');
 			}
+
+			// EOF Added by TMG fetch dropbox files of users with the latest update
 
 	}
 

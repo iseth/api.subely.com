@@ -15,6 +15,8 @@ class CreateDbxqueueTable extends Migration
     {
         Schema::create('dbxqueue', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('dbid');
+            $table->text('cursor');
             $table->timestamps();
         });
     }

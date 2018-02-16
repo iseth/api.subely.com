@@ -21,7 +21,15 @@ $app->get('/', function () use ($app) {
 $app->get('/webhook','WebhookController@webhookverify');
 $app->post('/webhook','WebhookController@webhook');
 
+
+// Added by TMG
 $app->get('/fetch-dropbox-changes','WebhookController@dropboxChanges');
+
+// Route for stripe post request.
+$app->post('stripe', 'StripeController@postPaymentWithStripe');
+
+// EOF Added by TMG 
+
 
 // Posts
 $app->get('/posts','PostController@index');
@@ -76,7 +84,6 @@ $app->post('/oauth/access_token', function() use ($app){
 });
 
 
-// Route for stripe post request.
-$app->post('stripe', 'StripeController@postPaymentWithStripe');
+
 
 });
