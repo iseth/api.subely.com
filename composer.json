@@ -6,7 +6,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "barryvdh/laravel-cors": "0.8.x@dev",
+        "barryvdh/laravel-cors": "0.8.x@dev"
        /* "php": ">=5.6.4",
         "laravel/lumen-framework": "5.4.*",
         "vlucas/phpdotenv": "~2.2",
