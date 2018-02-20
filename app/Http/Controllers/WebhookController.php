@@ -151,7 +151,7 @@ class WebhookController extends Controller{
 				return response()->json('files downloaded successfully')->withHeaders([
 	                'Access-Control-Allow-Origin' => '*',
 	                'Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS',
-	                'Access-Control-Allow-Credentials' -> 'true',
+	                'Access-Control-Allow-Credentials' => 'true',
             	]);
 
 			}
@@ -160,7 +160,7 @@ class WebhookController extends Controller{
 				return response()->json('No Users found in que')->withHeaders([
 	                'Access-Control-Allow-Origin' => '*',
 	                'Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS',
-	                'Access-Control-Allow-Credentials' -> 'true',
+	                'Access-Control-Allow-Credentials' => 'true',
             	]);
 			}
 
