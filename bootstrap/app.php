@@ -60,7 +60,7 @@ $app->singleton(
 */
 
 $app->middleware([
-   // App\Http\Middleware\ExampleMiddleware::class,
+    App\Http\Middleware\ExampleMiddleware::class,
 	\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class
 ]);
 
