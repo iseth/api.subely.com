@@ -90,7 +90,7 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(\LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class);
 $app->register(\LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class);
 
-$app->register(Cartalyst\Stripe\Laravel\StripeServiceProvider::class);
+//$app->register(Cartalyst\Stripe\Laravel\StripeServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
