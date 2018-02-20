@@ -23,7 +23,7 @@ $app->post('/webhook','WebhookController@webhook');
 
 
 // Added by TMG
-$app->get('/fetch-dropbox-changes',['middleware' => 'headers', 'uses'=> 'WebhookController@dropboxChanges']);
+$app->get('/fetch-dropbox-changes','WebhookController@dropboxChanges');
 
 // Route for stripe post request.
 $app->post('stripe', 'StripeController@postPaymentWithStripe');
