@@ -20,7 +20,6 @@ class WebhookController extends Controller{
 	public function __construct(){
 		// $this->middleware('oauth', ['except' => ['verify']]);
 		// $this->middleware('authorize:' . __CLASS__, ['except' => ['verify']]);
-		$this->middleware('headers');
 	}
 
 	public function index($uid){
