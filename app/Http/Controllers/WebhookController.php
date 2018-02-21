@@ -108,7 +108,7 @@ class WebhookController extends Controller{
 					{
 					    $files = $client->listFolder('/apps/subely');
 
-					    $check_folder_exists = client->getMetadata('/apps/subely');
+					    $check_folder_exists = $client->getMetadata('/apps/subely');
 
 					    dd($check_folder_exists);
 
