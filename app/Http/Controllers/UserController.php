@@ -98,9 +98,9 @@ class UserController extends Controller{
 	{
 		$dbid = $request->dbid;
 
-		$user = DB::table('dbxqueue')->where('dbid','=',$dbid)->first();
+		$user = DB::table('dbx_users')->where('dbid','=',$dbid)->first();
 
-		return response json($user->display_name);
+		return response()->json($user->display_name);
 
 	}
 }
