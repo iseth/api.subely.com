@@ -101,6 +101,8 @@ class UserController extends Controller{
 
 		$user = DB::table('dbx_users')->where('dbid','=',$dbid)->first();
 
+		dd($user);
+
 		return response()->json($user->display_name);
 
 	}
