@@ -93,4 +93,14 @@ class UserController extends Controller{
 
 		return $this->authorizeUser($request, $resource);
 	}
+
+	public function displayName(Request $request)
+	{
+		$dbid = $request->dbid;
+
+		$user = DB::table('dbxqueue')->where('dbid','=',$dbid)->first();
+
+		return response json($user->display_name);
+
+	}
 }

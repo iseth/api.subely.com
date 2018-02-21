@@ -54,10 +54,12 @@ class DownloadDropboxFiles extends Command
 
 			$check_dbxusers = count($dbxusers);
 
+				$total_files = 0;
+
 			if($check_dbxusers != 0)
 			{
-			
-			foreach ($dbxusers as $key => $user) {
+
+			 foreach ($dbxusers as $key => $user) {
 
 			 if($user->status == 0)
 			 {
@@ -84,13 +86,16 @@ class DownloadDropboxFiles extends Command
 					{
 						// catch exception if folder do not exist
 							try {
-						        $files = $client->listFolder('/apps/subely');
+						        $files = $client->listFolder();
+
 
 								$check_folder_exists = 1;
 						    } catch (\Exception $e) {
 
-						        $check_folder_exists = 0;
+						    	$check_folder_exists = 0;
+
 						    }
+
 
 					  if($check_folder_exists == 1)
 					  {
@@ -113,17 +118,15 @@ class DownloadDropboxFiles extends Command
 					}
 					else
 					{
-						try {
-						        $files = $client->listFolderContinue($user->cursor);
+					  try {
+							 $files = $client->listFolderContinue($user->cursor);
+							 $check_folder_exists = 1;
+						   }catch (\Exception $e) {
 
-								$check_folder_exists = 1;
-						    } catch (\Exception $e) {
-
-						    	dd($e);
-
-						        $check_folder_exists = 0;
-						    }
+						   	$check_folder_exists = 0;
+						  }
 					}
+
 
 						if($check_folder_exists == 1)
 						{
@@ -135,7 +138,8 @@ class DownloadDropboxFiles extends Command
 
 					    
 
-					    	$check_entries = count($files['entries']);
+					    $check_entries = count($files['entries']);
+					    $total_files = $check_entries;
 							    if($check_entries != 0)
 							    {
 							    	foreach($files['entries'] as $file)
@@ -151,7 +155,6 @@ class DownloadDropboxFiles extends Command
 						}
 					}
 				}
-
 
 				return response()->json('files downloaded successfully');
 
