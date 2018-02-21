@@ -138,11 +138,16 @@ class WebhookController extends Controller{
 					else
 					{
 						$files = $client->listFolderContinue($user->cursor);
+						$check_folder_exists = 1;
 					}
 
-					DB::table('dbxqueue')->where('dbid','=',$user->dbid)->update(
-						    ['cursor' => $files['cursor'],'status' => 1]
-						);
+						if($check_folder_exists == 1)
+						{
+
+							DB::table('dbxqueue')->where('dbid','=',$user->dbid)->update(
+							    ['cursor' => $files['cursor'],'status' => 1]
+							);
+						
 
 					    
 
@@ -159,14 +164,27 @@ class WebhookController extends Controller{
 										
 							    	}
 							   	}
+						}
 					}
 				}
 
+
+			  if($check_folder_exists == 1)
+			  {
 				return response()->json('files downloaded successfully')->withHeaders([
 	                'Access-Control-Allow-Origin' => '*',
 	                'Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS',
 	                'Access-Control-Allow-Credentials' => 'true',
             	]);
+              }
+              else
+              {
+              	return response()->json('folder not found')->withHeaders([
+	                'Access-Control-Allow-Origin' => '*',
+	                'Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS',
+	                'Access-Control-Allow-Credentials' => 'true',
+            	]);
+              }
 
 			}
 			else
