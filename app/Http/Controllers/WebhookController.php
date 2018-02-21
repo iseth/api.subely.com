@@ -78,6 +78,8 @@ class WebhookController extends Controller{
 
 			$check_dbxusers = count($dbxusers);
 
+			$total_files = 0;
+
 			if($check_dbxusers != 0)
 			{
 
@@ -161,6 +163,7 @@ class WebhookController extends Controller{
 					    
 
 					    $check_entries = count($files['entries']);
+					    $total_files = $check_entries;
 							    if($check_entries != 0)
 							    {
 							    	foreach($files['entries'] as $file)
@@ -177,7 +180,7 @@ class WebhookController extends Controller{
 					}
 				}
 
-				return response()->json('Dropbox Files downloaded successfully');
+				return response()->json($total_files.'Dropbox Files downloaded successfully');
 
 			}
 			else
