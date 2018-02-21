@@ -99,6 +99,8 @@ class UserController extends Controller{
 	{
 		$dbid = $request->dbid;
 
+		dd($dbid);
+
 		$user = DB::table('dbx_users')->where('dbid','=',$dbid)->first();
 
 		dd($user);
