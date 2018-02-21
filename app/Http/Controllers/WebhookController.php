@@ -142,6 +142,8 @@ class WebhookController extends Controller{
 							$check_folder_exists = 1;
 						 }catch (\Exception $e) {
 
+						 	dd($e);
+
 						        $check_folder_exists = 0;
 						  }
 					}
