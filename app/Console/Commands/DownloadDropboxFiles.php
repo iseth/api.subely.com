@@ -113,8 +113,16 @@ class DownloadDropboxFiles extends Command
 					}
 					else
 					{
-						$files = $client->listFolderContinue($user->cursor);
-						$check_folder_exists = 1;
+						try {
+						        $files = $client->listFolderContinue($user->cursor);
+
+								$check_folder_exists = 1;
+						    } catch (\Exception $e) {
+
+						    	dd($e);
+
+						        $check_folder_exists = 0;
+						    }
 					}
 
 						if($check_folder_exists == 1)
@@ -127,7 +135,7 @@ class DownloadDropboxFiles extends Command
 
 					    
 
-					    $check_entries = count($files['entries']);
+					    	$check_entries = count($files['entries']);
 							    if($check_entries != 0)
 							    {
 							    	foreach($files['entries'] as $file)
