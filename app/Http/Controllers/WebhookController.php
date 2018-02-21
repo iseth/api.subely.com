@@ -180,7 +180,7 @@ class WebhookController extends Controller{
 					}
 				}
 
-				return response()->json($total_files.'  Dropbox Files downloaded successfully');
+				return response()->json($total_files.' new dropbox Files downloaded successfully');
 
 			}
 			else
