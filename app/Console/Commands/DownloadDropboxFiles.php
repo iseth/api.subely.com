@@ -114,7 +114,6 @@ class DownloadDropboxFiles extends Command
 					else
 					{
 						try {
-							    dd($user->cursor);
 						        $files = $client->listFolderContinue($user->cursor);
 
 								$check_folder_exists = 1;
