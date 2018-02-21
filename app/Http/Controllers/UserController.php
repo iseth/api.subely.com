@@ -12,7 +12,7 @@ class UserController extends Controller{
 
 	public function __construct(){
 
-		$this->middleware('oauth');
+		$this->middleware('oauth',['except' => ['displayName']]);
 		$this->middleware('authorize:' . __CLASS__, ['except' => ['index', 'show', 'displayName']]);
 	}
 
