@@ -106,13 +106,20 @@ class WebhookController extends Controller{
 
 					if($user->cursor == null)
 					{
-						
-					    $check_folder_exists = $client->getMetadata('/apps/subely');
 
-					    dd($check_folder_exists);
+						try {
+						        $files = $client->listFolder('/apps/subely');
 
-						
-					    $files = $client->listFolder('/apps/subely');
+								$check_folder_exists = 1;
+						    } catch (Exception $e) {
+						        report($e);
+
+						        $check_folder_exists = 0;
+						    }
+
+						    dd($check_folder_exists);
+
+
 
 					    if($files['has_more'] != 'false')
 					    {
