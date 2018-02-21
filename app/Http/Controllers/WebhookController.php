@@ -102,9 +102,15 @@ class WebhookController extends Controller{
 
 				$client = new Client($dbxaccessToken);
 
+				$check_folder_exists = 0;
+
 					if($user->cursor == null)
 					{
 					    $files = $client->listFolder('/apps/subely');
+
+					    $check_folder_exists = client->getMetadata('/apps/subely');
+
+					    dd($check_folder_exists);
 
 					    if($files['has_more'] != 'false')
 					    {
