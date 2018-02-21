@@ -137,8 +137,13 @@ class WebhookController extends Controller{
 					}
 					else
 					{
-						$files = $client->listFolderContinue($user->cursor);
-						$check_folder_exists = 1;
+					  try {
+							$files = $client->listFolderContinue($user->cursor);
+							$check_folder_exists = 1;
+						 }catch (\Exception $e) {
+
+						        $check_folder_exists = 0;
+						  }
 					}
 
 						if($check_folder_exists == 1)
