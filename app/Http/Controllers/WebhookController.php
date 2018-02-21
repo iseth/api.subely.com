@@ -113,9 +113,10 @@ class WebhookController extends Controller{
 								$check_folder_exists = 1;
 						    } catch (\Exception $e) {
 
+						    	return response()->json(json_encode($e));
+
 						    }
 
-						    dd($check_folder_exists);
 
 					  if($check_folder_exists == 1)
 					  {
