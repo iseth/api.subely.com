@@ -145,6 +145,8 @@ class WebhookController extends Controller{
 						  }
 					}
 
+					dd($check_folder_exists);
+
 						if($check_folder_exists == 1)
 						{
 
