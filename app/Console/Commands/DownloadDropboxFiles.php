@@ -78,10 +78,22 @@ class DownloadDropboxFiles extends Command
 
 				$client = new Client($dbxaccessToken);
 
+				$check_folder_exists = 0;
+
 					if($user->cursor == null)
 					{
-					    $files = $client->listFolder('/apps/subely');
+						// catch exception if folder do not exist
+							try {
+						        $files = $client->listFolder('/apps/subely');
 
+								$check_folder_exists = 1;
+						    } catch (\Exception $e) {
+
+						        $check_folder_exists = 0;
+						    }
+
+					  if($check_folder_exists == 1)
+					  {
 					    if($files['has_more'] != 'false')
 					    {
 					    	$list_continue = $client->listFolderContinue($files['cursor']);
@@ -96,15 +108,22 @@ class DownloadDropboxFiles extends Command
 					    	}
 					    }
 
+					  }
+
 					}
 					else
 					{
 						$files = $client->listFolderContinue($user->cursor);
+						$check_folder_exists = 1;
 					}
 
-					DB::table('dbxqueue')->where('dbid','=',$user->dbid)->update(
-						    ['cursor' => $files['cursor'],'status' => 1]
-						);
+						if($check_folder_exists == 1)
+						{
+
+							DB::table('dbxqueue')->where('dbid','=',$user->dbid)->update(
+							    ['cursor' => $files['cursor'],'status' => 1]
+							);
+						
 
 					    
 
@@ -121,10 +140,19 @@ class DownloadDropboxFiles extends Command
 										
 							    	}
 							   	}
+						}
 					}
 				}
 
+
+			  if($check_folder_exists == 1)
+			  {
 				return response()->json('files downloaded successfully');
+              }
+              else
+              {
+              	return response()->json('folder not found');
+              }
 
 			}
 			else

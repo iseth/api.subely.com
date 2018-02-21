@@ -171,29 +171,17 @@ class WebhookController extends Controller{
 
 			  if($check_folder_exists == 1)
 			  {
-				return response()->json('files downloaded successfully')->withHeaders([
-	                'Access-Control-Allow-Origin' => '*',
-	                'Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS',
-	                'Access-Control-Allow-Credentials' => 'true',
-            	]);
+				return response()->json('files downloaded successfully');
               }
               else
               {
-              	return response()->json('folder not found')->withHeaders([
-	                'Access-Control-Allow-Origin' => '*',
-	                'Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS',
-	                'Access-Control-Allow-Credentials' => 'true',
-            	]);
+              	return response()->json('folder not found');
               }
 
 			}
 			else
 			{
-				return response()->json('No Users found in que')->withHeaders([
-	                'Access-Control-Allow-Origin' => '*',
-	                'Access-Control-Allow-Methods' => 'GET,POST,PUT,DELETE,OPTIONS',
-	                'Access-Control-Allow-Credentials' => 'true',
-            	]);
+				return response()->json('No Users found in que');
 			}
 
 			// EOF Added by TMG fetch dropbox files of users with the latest update
