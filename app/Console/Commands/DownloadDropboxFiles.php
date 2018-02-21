@@ -145,14 +145,7 @@ class DownloadDropboxFiles extends Command
 				}
 
 
-			  if($check_folder_exists == 1)
-			  {
 				return response()->json('files downloaded successfully');
-              }
-              else
-              {
-              	return response()->json('folder not found');
-              }
 
 			}
 			else
