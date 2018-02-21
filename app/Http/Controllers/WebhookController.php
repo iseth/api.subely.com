@@ -107,7 +107,7 @@ class WebhookController extends Controller{
 					if($user->cursor == null)
 					{
 
-						if ($e instanceof ($client->listFolder('/apps/subely'))) {
+						if ($e instanceof $client->listFolder('/apps/subely')){
 							dd($e);
 						    $check_folder_exists = 0;
 						}
