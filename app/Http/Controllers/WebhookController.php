@@ -112,8 +112,10 @@ class WebhookController extends Controller{
 							try {
 						        $files = $client->listFolder('/apps/subely');
 
-
-						        dd($files['entries']);
+						          echo '<pre>';
+								  var_dump($files['entries']);
+								  echo '</pre>';
+						        dd("check");
 
 
 								$check_folder_exists = 1;
