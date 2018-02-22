@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-         \App\Console\Commands\DownloadDropboxFiles::class,
+        // \App\Console\Commands\DownloadDropboxFiles::class,
     ];
 
     /**
@@ -24,6 +24,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('download:dropbox-files')->everyFiveMinutes()->withoutOverlapping();
+       // $schedule->command('download:dropbox-files')->everyFiveMinutes()->withoutOverlapping();
     }
 }
