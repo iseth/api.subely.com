@@ -244,11 +244,9 @@ class WebhookController extends Controller{
 		  	try{
 
 				$inner_files = $client->listFolder($restricted_file_name);
-				dd($inner_files);
 				$iterator = 1;
 
 			} catch (\Exception $e) {
-					dd($e);
 				$iterator = 0;
 			}
 
@@ -259,7 +257,6 @@ class WebhookController extends Controller{
 
 			if($check_inner_files != 0)
 			{
-				$inner_files = $client->listFolder($restricted_file_name);
 
 				foreach ($inner_files['entries'] as $inner_file){
 
