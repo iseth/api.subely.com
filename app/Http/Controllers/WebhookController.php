@@ -235,6 +235,25 @@ class WebhookController extends Controller{
 	{
 		if($restricted_path == 1)
 		  {
+
+		  	$iterator = 0;
+
+		  	try{
+
+				$inner_files = $client->listFolder($full_file_name);
+				$iterator = 1;
+
+			} catch (\Exception $e) {
+				$iterator = 0;
+			}
+
+		if($iterator == 1)
+		{
+
+			$check_inner_files = count($inner_files['entries']);
+
+			if($check_inner_files ! = 0)
+			{
 				$inner_files = $client->listFolder($restricted_file_name);
 
 				foreach ($inner_files['entries'] as $inner_file){
@@ -246,7 +265,7 @@ class WebhookController extends Controller{
 
 						if (!file_exists(base_path().$inner_folder_path)) {
 
-											mkdir(base_path().$inner_folder_path, 0777, true);
+							mkdir(base_path().$inner_folder_path, 0777, true);
 						}
 
 
@@ -268,11 +287,34 @@ class WebhookController extends Controller{
 					}
 													
 				}
+
+			   }
+
+			  }
 		   }
 		else
 		  {
-				$inner_files = $client->listFolder($full_file_name);
 
+		  	$iterator = 0;
+
+		  	try{
+
+				$inner_files = $client->listFolder($full_file_name);
+				$iterator = 1;
+
+			} catch (\Exception $e) {
+
+
+				$iterator = 0;
+			}
+
+		if($iterator == 1)
+		{
+
+			$check_inner_files = count($inner_files['entries']);
+
+			if($check_inner_files ! = 0)
+			{
 				foreach ($inner_files['entries'] as $inner_file){
 
 					//dd($inner_file);
@@ -284,7 +326,7 @@ class WebhookController extends Controller{
 
 						if (!file_exists(base_path().$inner_folder_path)) {
 
-											mkdir(base_path().$inner_folder_path, 0777, true);
+							mkdir(base_path().$inner_folder_path, 0777, true);
 						}
 
 
@@ -307,7 +349,11 @@ class WebhookController extends Controller{
 													
 				}
 
+			}
+
 		  }
+
+		 }
 	}
 
 }
