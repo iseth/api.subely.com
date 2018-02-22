@@ -295,6 +295,8 @@ class WebhookController extends Controller{
 					else
 					{
 
+						dd($inner_folder_path);
+
 						$download = $client->download($inner_file['path_lower']);	
 
 						file_put_contents(base_path().$inner_folder_path, $download);
