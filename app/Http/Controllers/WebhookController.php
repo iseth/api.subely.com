@@ -190,27 +190,15 @@ class WebhookController extends Controller{
 											}
 
 
-											$check_if_folder = 1;
-
 							    			$inner_folder_path = '/public/dropbox-files/'.$path.'/'.$file['name'];
-
-							    			$tag = $file['.tag'];
 
 							    			$restricted_file_name = "/".$file['name'];
 
 							    			$full_file_name = "/apps/subely"."/".$file['name'];
 
-											if($restricted_path == 1)
-											{
-												$inner_files = $client->listFolder($restricted_file_name);
-											}
-											else
-											{
-												$inner_files = $client->listFolder($full_file_name);
-
-											}
-
-											dd($inner_files);
+											
+							    			fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path)
+											
 
 										}
 										else
@@ -240,6 +228,80 @@ class WebhookController extends Controller{
 
 			// EOF Added by TMG fetch dropbox files of users with the latest update
 
+	}
+
+
+	public function fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path)
+	{
+		if($restricted_path == 1)
+		  {
+				$inner_files = $client->listFolder($restricted_file_name);
+
+				foreach ($inner_files['entries'] as $inner_file){
+
+					if($inner_file['.tag'] == "folder")
+					{
+
+						$inner_folder_path = $inner_folder_path."/".$inner_file['name'];
+
+						if (!file_exists(base_path().$inner_folder_path)) {
+
+											mkdir(base_path().$inner_folder_path, 0777, true);
+						}
+
+
+						$restricted_file_name = $restricted_file_name."/".$inner_file['name'];
+
+						$full_file_name = $full_file_name."/".$inner_file['name'];
+
+						fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path)
+					}
+					else
+					{
+
+						$download = $client->download($inner_file['path_lower']);	
+
+						file_put_contents(base_path().$inner_folder_path, $download);
+
+					}
+													
+				}
+		   }
+		else
+		  {
+				$inner_files = $client->listFolder($full_file_name);
+
+				foreach ($inner_files['entries'] as $inner_file){
+
+					if($inner_file['.tag'] == "folder")
+					{
+
+						$inner_folder_path = $inner_folder_path."/".$inner_file['name'];
+
+						if (!file_exists(base_path().$inner_folder_path)) {
+
+											mkdir(base_path().$inner_folder_path, 0777, true);
+						}
+
+
+						$restricted_file_name = $restricted_file_name."/".$inner_file['name'];
+
+						$full_file_name = $full_file_name."/".$inner_file['name'];
+
+						fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path)
+					}
+					else
+					{
+
+						$download = $client->download($inner_file['path_lower']);	
+
+						file_put_contents(base_path().$inner_folder_path, $download);
+
+					}
+													
+				}
+
+		  }
 	}
 
 }
