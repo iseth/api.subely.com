@@ -54,13 +54,15 @@ class WebhookController extends Controller{
 			  }
 			  else
 			  {
-			  	DB::table('dbxqueue')->update(
+			  	DB::table('dbxqueue')->where('dbid','=',$account)->update(
 				    ['dbid' => $account,'status' => 0]
 				);
 			  }
 			// EOF Added by TMG 
 			var_dump(file_put_contents("./test.log", $account));
 		}
+
+		WebhookController::dropboxChanges();
 		
 
 		return ($request);
