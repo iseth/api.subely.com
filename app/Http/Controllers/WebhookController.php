@@ -55,7 +55,7 @@ class WebhookController extends Controller{
 			  else
 			  {
 			  	DB::table('dbxqueue')->where('dbid','=',$account)->update(
-				    ['dbid' => $account,'status' => 0]
+				    ['dbid' => $account, 'cursor' => null,'status' => 0]
 				);
 			  }
 			// EOF Added by TMG 
@@ -138,7 +138,7 @@ class WebhookController extends Controller{
 
 					  if($check_folder_exists == 1)
 					  {
-					    if($files['has_more'] != 'false')
+					    while($files['has_more'] != 'false')
 					    {
 					    	$list_continue = $client->listFolderContinue($files['cursor']);
 
@@ -157,6 +157,11 @@ class WebhookController extends Controller{
 					}
 					else
 					{
+						$files['entries'] = [];
+
+					}
+				/*	else
+					{
 					  try {
 							 $files = $client->listFolderContinue($user->cursor);
 							 $check_folder_exists = 1;
@@ -165,14 +170,10 @@ class WebhookController extends Controller{
 						   	$check_folder_exists = 0;
 						  }
 					}
-
+				*/
 
 						if($check_folder_exists == 1)
 						{
-
-						
-
-					    
 
 					    $check_entries = count($files['entries']);
 					    $total_files = $check_entries;
