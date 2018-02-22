@@ -13,6 +13,7 @@ use Spatie\FlysystemDropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
 use DB;
+use Illuminate\Http\File;
 
 
 
@@ -95,7 +96,7 @@ class WebhookController extends Controller{
 
 			   	if (file_exists(base_path().'/public/dropbox-files/'.$path)) {
 
-			   		\File::deleteDirectory(base_path().'/public/dropbox-files/'.$path);
+			   		File::deleteDirectory(base_path().'/public/dropbox-files/'.$path);
 				}
 
 			   	if (!file_exists(base_path().'/public/dropbox-files/'.$path)) {
