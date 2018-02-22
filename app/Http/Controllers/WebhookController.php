@@ -252,7 +252,7 @@ class WebhookController extends Controller{
 
 			$check_inner_files = count($inner_files['entries']);
 
-			if($check_inner_files ! = 0)
+			if($check_inner_files != 0)
 			{
 				$inner_files = $client->listFolder($restricted_file_name);
 
@@ -313,7 +313,7 @@ class WebhookController extends Controller{
 
 			$check_inner_files = count($inner_files['entries']);
 
-			if($check_inner_files ! = 0)
+			if($check_inner_files != 0)
 			{
 				foreach ($inner_files['entries'] as $inner_file){
 
