@@ -94,7 +94,7 @@ class WebhookController extends Controller{
 
 			   	if (file_exists(base_path().'/public/dropbox-files/'.$path)) {
 
-			   		unlink(base_path().'/public/dropbox-files/'.$path, 0777, true);
+			   		unlink(base_path().'/public/dropbox-files/'.$path);
 				}
 
 			   	if (!file_exists(base_path().'/public/dropbox-files/'.$path)) {
