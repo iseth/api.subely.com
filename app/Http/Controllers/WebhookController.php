@@ -104,6 +104,8 @@ class WebhookController extends Controller{
 
 				$client = new Client($dbxaccessToken);
 
+				$restricted_path = 0;
+
 				$check_folder_exists = 0;
 
 					if($user->cursor == null)
@@ -112,11 +114,15 @@ class WebhookController extends Controller{
 							try {
 						        $files = $client->listFolder("/apps/subely");
 
+						        $restricted_path = 0;
+
 								$check_folder_exists = 1;
 						    } catch (\Exception $e) {
 						    	try{
 
 						    	   $files = $client->listFolder("");
+
+						    	   $restricted_path = 1;
 
 						    	   $check_folder_exists = 1;
 
@@ -182,6 +188,29 @@ class WebhookController extends Controller{
 
 											mkdir(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'], 0777, true);
 											}
+
+
+											$check_if_folder = 1;
+
+							    			$inner_folder_path = '/public/dropbox-files/'.$path.'/'.$file['name'];
+
+							    			$tag = $file['.tag'];
+
+							    			$restricted_file_name = "/".$file['name'];
+
+							    			$full_file_name = "/apps/subely"."/".$file['name'];
+
+											if($restricted_path == 1)
+											{
+												$inner_files = $client->listFolder($restricted_file_name);
+											}
+											else
+											{
+												$inner_files = $client->listFolder($full_file_name);
+
+											}
+
+											dd($inner_files);
 
 										}
 										else
