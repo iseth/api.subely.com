@@ -175,12 +175,24 @@ class WebhookController extends Controller{
 							    {
 							    	foreach($files['entries'] as $file)
 							    	{
+							    		if($file['.tag'] == "folder")
+							    		{
 
-							    		dd($file);
+							    			if (!file_exists(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'])) {
+
+											mkdir(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'], 0777, true);
+											}
+
+										}
+										else
+										{
+														   	
 
 							    		$download = $client->download($file['path_lower']);	
 
 										file_put_contents(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'], $download);
+
+										}
 										
 										
 							    	}
