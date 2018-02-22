@@ -273,9 +273,9 @@ class WebhookController extends Controller{
 
 				foreach ($inner_files['entries'] as $inner_file){
 
-					dd($inner_file);
+					//dd($inner_file);
 
-					if($inner_file['.tag'] == "folder")
+					if($inner_file[".tag"] == "folder")
 					{
 
 						$inner_folder_path = $inner_folder_path."/".$inner_file['name'];
