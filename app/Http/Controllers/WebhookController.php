@@ -110,10 +110,10 @@ class WebhookController extends Controller{
 					{
 						// catch exception if folder do not exist
 							try {
-						        $files = $client->listFolder('/apps/subely/isethi.subely.com');
+						        $files = $client->listFolder('/apps/subely');
 
 
-						        dd($files);
+						        dd($files['entries']);
 
 
 								$check_folder_exists = 1;
