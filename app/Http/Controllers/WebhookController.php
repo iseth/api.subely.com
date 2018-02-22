@@ -238,7 +238,6 @@ class WebhookController extends Controller{
 
 		if($restricted_path == 1)
 		  {
-		  	dd("check");
 
 		  	$iterator = 0;
 
@@ -249,6 +248,7 @@ class WebhookController extends Controller{
 				$iterator = 1;
 
 			} catch (\Exception $e) {
+					dd($e);
 				$iterator = 0;
 			}
 
