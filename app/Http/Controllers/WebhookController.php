@@ -59,7 +59,7 @@ class WebhookController extends Controller{
 				);
 			  }
 			// EOF Added by TMG 
-			var_dump(file_put_contents("./test.log", $account));
+			//var_dump(file_put_contents("./test.log", $account));
 		}
 
 		WebhookController::dropboxChanges();
