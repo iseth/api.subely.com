@@ -170,9 +170,6 @@ class WebhookController extends Controller{
 						if($check_folder_exists == 1)
 						{
 
-							DB::table('dbxqueue')->where('dbid','=',$user->dbid)->update(
-							    ['cursor' => $files['cursor'],'status' => 1]
-							);
 						
 
 					    
@@ -216,6 +213,12 @@ class WebhookController extends Controller{
 										
 							    	}
 							   	}
+
+
+							 
+							DB::table('dbxqueue')->where('dbid','=',$user->dbid)->update(
+							    ['cursor' => $files['cursor'],'status' => 1]
+							);
 						}
 					}
 				}
