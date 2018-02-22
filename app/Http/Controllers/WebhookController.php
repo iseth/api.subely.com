@@ -259,9 +259,11 @@ class WebhookController extends Controller{
 					else
 					{
 
+						$merged_file_name = $inner_folder_path."/".$inner_file['name'];
+
 						$download = $client->download($inner_file['path_lower']);	
 
-						file_put_contents(base_path().$inner_folder_path, $download);
+						file_put_contents(base_path().$merged_file_name, $download);
 
 					}
 													
@@ -295,11 +297,11 @@ class WebhookController extends Controller{
 					else
 					{
 
-						dd($inner_files);
+						$merged_file_name = $inner_folder_path."/".$inner_file['name'];
 
 						$download = $client->download($inner_file['path_lower']);	
 
-						file_put_contents(base_path().$inner_folder_path, $download);
+						file_put_contents(base_path().$merged_file_name, $download);
 
 					}
 													
