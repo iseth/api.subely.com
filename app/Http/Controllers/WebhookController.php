@@ -176,6 +176,8 @@ class WebhookController extends Controller{
 							    	foreach($files['entries'] as $file)
 							    	{
 
+							    		dd($file);
+
 							    		$download = $client->download($file['path_lower']);	
 
 										file_put_contents(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'], $download);
