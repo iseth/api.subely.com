@@ -197,7 +197,7 @@ class WebhookController extends Controller{
 							    			$full_file_name = "/apps/subely"."/".$file['name'];
 
 											
-							    			WebhookController::fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+							    			WebhookController::fetchInnerData($client,$inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
 											
 
 										}
@@ -231,7 +231,7 @@ class WebhookController extends Controller{
 	}
 
 
-	public function fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path)
+	public function fetchInnerData($client,$inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path)
 	{
 		if($restricted_path == 1)
 		  {
@@ -254,7 +254,7 @@ class WebhookController extends Controller{
 
 						$full_file_name = $full_file_name."/".$inner_file['name'];
 
-						WebhookController::fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+						WebhookController::fetchInnerData($client,$inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
 					}
 					else
 					{
@@ -288,7 +288,7 @@ class WebhookController extends Controller{
 
 						$full_file_name = $full_file_name."/".$inner_file['name'];
 
-						WebhookController::fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+						WebhookController::fetchInnerData($client,$inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
 					}
 					else
 					{
