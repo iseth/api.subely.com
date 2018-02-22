@@ -93,9 +93,11 @@ class WebhookController extends Controller{
 
 			   	$path = $user->dbid;
 
+			   	$filesystem = new Filesystem();
+
 			   	if (file_exists(base_path().'/public/dropbox-files/'.$path)) {
 
-			   		Filesystem::deleteDirectory(base_path().'/public/dropbox-files/'.$path);
+			   		$filesystem->deleteDirectory(base_path().'/public/dropbox-files/'.$path);
 				}
 
 			   	if (!file_exists(base_path().'/public/dropbox-files/'.$path)) {
