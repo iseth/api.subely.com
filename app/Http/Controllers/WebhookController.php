@@ -61,8 +61,6 @@ class WebhookController extends Controller{
 			// EOF Added by TMG 
 			var_dump(file_put_contents("./test.log", $account));
 		}
-
-		dropboxChanges();
 		
 
 		return ($request);
@@ -112,10 +110,19 @@ class WebhookController extends Controller{
 					{
 						// catch exception if folder do not exist
 							try {
-						        $files = $client->listFolder('/apps/subely');
+						        $files = $client->listFolder('/apps/subely/isethi.subely.com/css');
+
+						          echo '<pre>';
+								  var_dump($files['entries']);
+								  echo '</pre>';
+						        dd("check");
+
 
 								$check_folder_exists = 1;
 						    } catch (\Exception $e) {
+
+						    	dd($e);
+
 						    	$check_folder_exists = 0;
 
 						    }
@@ -146,6 +153,8 @@ class WebhookController extends Controller{
 							 $files = $client->listFolderContinue($user->cursor);
 							 $check_folder_exists = 1;
 						   }catch (\Exception $e) {
+
+						   	dd($e);
 
 						   	$check_folder_exists = 0;
 						  }
