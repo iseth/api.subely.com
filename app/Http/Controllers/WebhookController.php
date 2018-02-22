@@ -243,6 +243,7 @@ class WebhookController extends Controller{
 		  	try{
 
 				$inner_files = $client->listFolder($full_file_name);
+				dd($inner_files);
 				$iterator = 1;
 
 			} catch (\Exception $e) {
@@ -262,8 +263,6 @@ class WebhookController extends Controller{
 
 					if($inner_file['.tag'] == "folder")
 					{
-
-						dd($inner_file['.tag']);
 
 						$inner_folder_path_after = $inner_folder_path."/".$inner_file['name'];
 
