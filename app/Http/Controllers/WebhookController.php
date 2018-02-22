@@ -13,7 +13,7 @@ use Spatie\FlysystemDropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
 use DB;
-use File;
+use \File;
 
 
 class WebhookController extends Controller{
