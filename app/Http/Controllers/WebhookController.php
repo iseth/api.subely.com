@@ -197,7 +197,7 @@ class WebhookController extends Controller{
 							    			$full_file_name = "/apps/subely"."/".$file['name'];
 
 											
-							    			fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+							    			WebhookController::fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
 											
 
 										}
@@ -254,7 +254,7 @@ class WebhookController extends Controller{
 
 						$full_file_name = $full_file_name."/".$inner_file['name'];
 
-						fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+						WebhookController::fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
 					}
 					else
 					{
@@ -288,7 +288,7 @@ class WebhookController extends Controller{
 
 						$full_file_name = $full_file_name."/".$inner_file['name'];
 
-						fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+						WebhookController::fetchInnerData($inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
 					}
 					else
 					{
