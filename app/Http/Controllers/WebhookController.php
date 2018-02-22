@@ -127,11 +127,6 @@ class WebhookController extends Controller{
 
 						    }
 
-					 echo '<pre>';
-								  var_dump($files['entries']);
-								  echo '</pre>';
-						        dd("check");
-
 
 					  if($check_folder_exists == 1)
 					  {
@@ -158,8 +153,6 @@ class WebhookController extends Controller{
 							 $files = $client->listFolderContinue($user->cursor);
 							 $check_folder_exists = 1;
 						   }catch (\Exception $e) {
-
-						   	dd($e);
 
 						   	$check_folder_exists = 0;
 						  }
