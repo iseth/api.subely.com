@@ -302,6 +302,7 @@ class WebhookController extends Controller{
 		  	try{
 
 				$inner_files = $client->listFolder($full_file_name);
+				dd($inner_files);
 				$iterator = 1;
 
 			} catch (\Exception $e) {
