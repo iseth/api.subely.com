@@ -138,7 +138,7 @@ class WebhookController extends Controller{
 
 					  if($check_folder_exists == 1)
 					  {
-					    while($files['has_more'] != 'false')
+					    while($files['has_more'] == 'true')
 					    {
 					    	$list_continue = $client->listFolderContinue($files['cursor']);
 
