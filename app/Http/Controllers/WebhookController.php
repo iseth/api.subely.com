@@ -92,11 +92,15 @@ class WebhookController extends Controller{
 
 			   	$path = $user->dbid;
 
+			   	if (file_exists(base_path().'/public/dropbox-files/'.$path)) {
+
+			   		unlink(base_path().'/public/dropbox-files/'.$path, 0777, true);
+				}
+
 			   	if (!file_exists(base_path().'/public/dropbox-files/'.$path)) {
 
 			   		mkdir(base_path().'/public/dropbox-files/'.$path, 0777, true);
 				}
-			   	
 
 			  
 			   	
