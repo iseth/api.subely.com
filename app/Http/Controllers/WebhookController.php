@@ -261,7 +261,7 @@ class WebhookController extends Controller{
 					if($inner_file['.tag'] == "folder")
 					{
 
-						$inner_folder_path = $inner_folder_path."/".$inner_file['name'];
+						$inner_folder_path_after = $inner_folder_path."/".$inner_file['name'];
 
 						if (!file_exists(base_path().$inner_folder_path)) {
 
@@ -269,11 +269,11 @@ class WebhookController extends Controller{
 						}
 
 
-						$restricted_file_name = $restricted_file_name."/".$inner_file['name'];
+						$restricted_file_name_after = $restricted_file_name."/".$inner_file['name'];
 
-						$full_file_name = $full_file_name."/".$inner_file['name'];
+						$full_file_name_after = $full_file_name."/".$inner_file['name'];
 
-						WebhookController::fetchInnerData($client,$inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+						WebhookController::fetchInnerData($client,$inner_folder_path_after,$restricted_file_name_after,$full_file_name_after,$restricted_path);
 					}
 					else
 					{
@@ -322,7 +322,7 @@ class WebhookController extends Controller{
 					if($inner_file[".tag"] == "folder")
 					{
 
-						$inner_folder_path = $inner_folder_path."/".$inner_file['name'];
+						$inner_folder_path_after = $inner_folder_path."/".$inner_file['name'];
 
 						if (!file_exists(base_path().$inner_folder_path)) {
 
@@ -330,11 +330,11 @@ class WebhookController extends Controller{
 						}
 
 
-						$restricted_file_name = $restricted_file_name."/".$inner_file['name'];
+						$restricted_file_name_after = $restricted_file_name."/".$inner_file['name'];
 
-						$full_file_name = $full_file_name."/".$inner_file['name'];
+						$full_file_name_after = $full_file_name."/".$inner_file['name'];
 
-						WebhookController::fetchInnerData($client,$inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
+						WebhookController::fetchInnerData($client,$inner_folder_path_after,$restricted_file_name_after,$full_file_name_after,$restricted_path);
 					}
 					else
 					{
