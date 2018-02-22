@@ -112,6 +112,9 @@ class WebhookController extends Controller{
 							try {
 						        $files = $client->listFolder();
 
+						        
+						        dd($files);
+
 
 								$check_folder_exists = 1;
 						    } catch (\Exception $e) {
