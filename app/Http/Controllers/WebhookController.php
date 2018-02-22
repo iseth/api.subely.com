@@ -263,6 +263,8 @@ class WebhookController extends Controller{
 					if($inner_file['.tag'] == "folder")
 					{
 
+						dd($inner_file['.tag']);
+
 						$inner_folder_path_after = $inner_folder_path."/".$inner_file['name'];
 
 						if (!file_exists(base_path().$inner_folder_path_after)) {
@@ -313,8 +315,6 @@ class WebhookController extends Controller{
 		{
 
 			$check_inner_files = count($inner_files['entries']);
-
-			dd($check_inner_files);
 
 			if($check_inner_files != 0)
 			{
