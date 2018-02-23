@@ -91,7 +91,12 @@ class WebhookController extends Controller{
 			 if($user->status == 0)
 			 {
 
-			 	$paths = DB::table('subs')->where('owner','=',$user->uid)->get();
+			 	$dbx_user = DB::table('dbx_users')->where('dbid','=',$user->dbid)->first();
+
+			  if($dbx_user != null)
+			   {
+
+			 	$paths = DB::table('subs')->where('owner','=',$dbx_user->uid)->get();
 
 			 	$check_path_exists = count($paths);
 
@@ -240,6 +245,8 @@ class WebhookController extends Controller{
 
 					  }
 					}
+
+				   }
 				}
 
 				return response()->json($total_files.' new dropbox files downloaded');
