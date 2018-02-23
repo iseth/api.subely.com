@@ -137,7 +137,7 @@ class SubsController extends Controller{
 		}
 	}
 
-	public function destroy($uid,Request $request){
+	public function destroy(Request $request,$uid){
 
 		$subs = Subs::where('sub_id', '=', $uid);
 
