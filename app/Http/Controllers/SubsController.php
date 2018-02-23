@@ -42,11 +42,11 @@ class SubsController extends Controller{
 		$sub = Subs::create([
 					'sub_id'							=> 		$sub_id,
 					'owner' 							=> 		$request->get('user_id'),
-					'sub_domain' 					=> 		$request->get('sub_domain') .'subely.me',
+					'sub_domain' 					=> 		$request->get('sub_domain') .'.subely.me',
 					'domain' 							=> 		'domain',
 					'status'							=> 		'1',
 					'provider' 						=> 		$request->get('provider'),
-					'www' 								=> 		$request->get('www') .'subely.me',
+					'www' 								=> 		$request->get('www') .'.subely.me',
 					'host'								=> 		'001',
 					'isActive' 						=> 		'0',
 				]);
