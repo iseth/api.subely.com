@@ -137,7 +137,7 @@ class SubsController extends Controller{
 		}
 	}
 
-	public function destroy($uid){
+	public function destroy($uid,Request $request){
 
 		$subs = Subs::where('sub_id', '=', $uid);
 
@@ -166,7 +166,11 @@ class SubsController extends Controller{
 
 	    	$filesystem = new Filesystem($adapter);
 
+
+	     if($request->deletefromdropbox == 1)
+	     {
 			$filesystem->deleteDir($sub_domain);
+		 }
 
 			// return $directory;
 		}
@@ -185,7 +189,10 @@ class SubsController extends Controller{
 
 	    	$filesystem = new Filesystem($adapter);
 
-			$filesystem->deleteDir($sub_domain);
+			if($request->deletefromdropbox == 1)
+		    {
+				$filesystem->deleteDir($sub_domain);
+		 	}
 
 		}
 
