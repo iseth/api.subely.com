@@ -67,26 +67,28 @@ class SubsController extends Controller{
 
 	    	$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
 
-			var_dump($filesystem->createDir($request->get('sub_domain')));
+			//var_dump($filesystem->createDir($request->get('sub_domain')));
 			$filesystem->write($request->get('sub_domain') . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
 			// var_dump($filesystem->createDir('/secure'));
 			// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
 		}
 
 		if (app()->environment('production', 'staging')) {
-			$directory = '../storage/sub_www/' . $request->get('sub_domain') . '.subely.me';
-			$success = mkdir($directory);
+			$directory = base_path().'/public/dropbox-files/'. $request->get('sub_domain') . '.subely.me';
+			if (!file_exists($directory)) {
+				$success = mkdir($directory);
+			}
 
 			$dbxUserController = new dbxUserController;
 			$dbxaccessToken = $dbxUserController->getToken($request->get('user_id'));
 
-
 			$client = new Client($dbxaccessToken);
-	    $adapter = new DropboxAdapter($client);
+	    	$adapter = new DropboxAdapter($client);
+	    	$filesystem = new Filesystem($adapter);
 
-	    $filesystem = new Filesystem($adapter);
+	    	$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
 
-			var_dump($filesystem->createDir($request->get('sub_domain')));
+			//var_dump($filesystem->createDir($request->get('sub_domain')));
 			$filesystem->write($request->get('sub_domain') . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
 			// var_dump($filesystem->createDir('/secure'));
 			// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
@@ -150,35 +152,41 @@ class SubsController extends Controller{
 		}
 
 		if (app()->environment('local')) {
-			$directory = '../storage/sub_www/' . $sub_domain . '.subely.me';
-			$success = $this->delTree($directory);
+
+			$directory = base_path().'/public/dropbox-files/'. $sub_domain . '.subely.me';
+			if (file_exists($directory)) {
+				$success = $this->delTree($directory);
+			}
 
 			$dbxUserController = new dbxUserController;
 			$dbxaccessToken = $dbxUserController->getToken($owner_uid);
 
 			$client = new Client($dbxaccessToken);
-	    $adapter = new DropboxAdapter($client);
+	    	$adapter = new DropboxAdapter($client);
 
-	    $filesystem = new Filesystem($adapter);
+	    	$filesystem = new Filesystem($adapter);
 
-			$filesystem->deleteDir($sub_domain);
+			$filesystem->deleteDir($sub_domain . '.subely.me');
 
 			// return $directory;
 		}
 
 		if (app()->environment('production', 'staging')) {
-			$directory = '../storage/sub_www/' . $sub_domain . '.subely.me';
-			$success = $this->delTree($directory);
+			$directory = base_path().'/public/dropbox-files/'. $sub_domain . '.subely.me';
+			if (file_exists($directory)) {
+				$success = $this->delTree($directory);
+			}
 
 			$dbxUserController = new dbxUserController;
- 			$dbxaccessToken = $dbxUserController->getToken($owner_uid);
+			$dbxaccessToken = $dbxUserController->getToken($owner_uid);
 
- 			$client = new Client($dbxaccessToken);
- 	    $adapter = new DropboxAdapter($client);
+			$client = new Client($dbxaccessToken);
+	    	$adapter = new DropboxAdapter($client);
 
- 	    $filesystem = new Filesystem($adapter);
+	    	$filesystem = new Filesystem($adapter);
 
- 			$filesystem->deleteDir($sub_domain);
+			$filesystem->deleteDir($sub_domain . '.subely.me');
+
 		}
 
 		$subs->delete();
