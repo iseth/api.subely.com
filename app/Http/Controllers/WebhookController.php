@@ -92,7 +92,7 @@ class WebhookController extends Controller{
 			 {
 
 			   	$path = $user->dbid;
-
+				// $path = '../';
 			   	$filesystem = new Filesystem();
 
 			   	if (file_exists(base_path().'/public/dropbox-files/'.$path)) {
