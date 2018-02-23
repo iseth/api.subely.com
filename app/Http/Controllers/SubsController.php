@@ -42,11 +42,11 @@ class SubsController extends Controller{
 		$sub = Subs::create([
 					'sub_id'							=> 		$sub_id,
 					'owner' 							=> 		$request->get('user_id'),
-					'sub_domain' 					=> 		$request->get('sub_domain'),
+					'sub_domain' 					=> 		$request->get('sub_domain') .'subely.me',
 					'domain' 							=> 		'domain',
 					'status'							=> 		'1',
 					'provider' 						=> 		$request->get('provider'),
-					'www' 								=> 		$request->get('www'),
+					'www' 								=> 		$request->get('www') .'subely.me',
 					'host'								=> 		'001',
 					'isActive' 						=> 		'0',
 				]);
@@ -153,7 +153,7 @@ class SubsController extends Controller{
 
 		if (app()->environment('local')) {
 
-			$directory = base_path().'/public/dropbox-files/'. $sub_domain . '.subely.me';
+			$directory = base_path().'/public/dropbox-files/'. $sub_domain;
 			if (file_exists($directory)) {
 				$success = $this->delTree($directory);
 			}
@@ -166,13 +166,13 @@ class SubsController extends Controller{
 
 	    	$filesystem = new Filesystem($adapter);
 
-			$filesystem->deleteDir($sub_domain . '.subely.me');
+			$filesystem->deleteDir($sub_domain);
 
 			// return $directory;
 		}
 
 		if (app()->environment('production', 'staging')) {
-			$directory = base_path().'/public/dropbox-files/'. $sub_domain . '.subely.me';
+			$directory = base_path().'/public/dropbox-files/'. $sub_domain;
 			if (file_exists($directory)) {
 				$success = $this->delTree($directory);
 			}
@@ -185,7 +185,7 @@ class SubsController extends Controller{
 
 	    	$filesystem = new Filesystem($adapter);
 
-			$filesystem->deleteDir($sub_domain . '.subely.me');
+			$filesystem->deleteDir($sub_domain);
 
 		}
 
