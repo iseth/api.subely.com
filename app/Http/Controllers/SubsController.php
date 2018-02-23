@@ -65,7 +65,7 @@ class SubsController extends Controller{
 	    	$adapter = new DropboxAdapter($client);
 	    	$filesystem = new Filesystem($adapter);
 
-	    	$filesystem->makeDirectory('/apps/subely/'. $request->get('sub_domain') . '.subely.me');
+	    	$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
 
 			var_dump($filesystem->createDir($request->get('sub_domain')));
 			$filesystem->write($request->get('sub_domain') . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
