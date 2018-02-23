@@ -211,9 +211,9 @@ class WebhookController extends Controller{
 
 							    			$inner_folder_path = '/public/dropbox-files/'.$path->sub_domain.'/'.$file['name'];
 
-							    			$restricted_file_name = "/".$file['name'];
+							    			$restricted_file_name = "/".$path->sub_domain."/".$file['name'];
 
-							    			$full_file_name = "/apps/subely"."/".$file['name'];
+							    			$full_file_name = "/apps/subely"."/".$path->sub_domain."/".$file['name'];
 
 											
 							    			WebhookController::fetchInnerData($client,$inner_folder_path,$restricted_file_name,$full_file_name,$restricted_path);
