@@ -52,16 +52,21 @@ class SubsController extends Controller{
 				]);
 
 		if (app()->environment('local')) {
-			$directory = '../storage/sub_www/' . $request->get('sub_domain') . '.subely.me';
+
+			$directory = base_path().'/public/dropbox-files/'. $request->get('sub_domain') . '.subely.me';
 			$success = mkdir($directory);
 
 			$dbxUserController = new dbxUserController;
 			$dbxaccessToken = $dbxUserController->getToken($request->get('user_id'));
 
 			$client = new Client($dbxaccessToken);
-	    $adapter = new DropboxAdapter($client);
+	    	$adapter = new DropboxAdapter($client);
 
-	    $filesystem = new Filesystem($adapter);
+	    	$adapter->createDir('/apps/subely/'. $request->get('sub_domain') . '.subely.me');
+
+
+
+	    	$filesystem = new Filesystem($adapter);
 
 			var_dump($filesystem->createDir($request->get('sub_domain')));
 			$filesystem->write($request->get('sub_domain') . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
