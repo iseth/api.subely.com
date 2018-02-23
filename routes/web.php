@@ -27,6 +27,8 @@ $app->get('/fetch-dropbox-changes','WebhookController@dropboxChanges');
 
 $app->get('/display_name','UserController@displayName');
 
+$app->get('/plans', 'PlansController@getAllPlans');
+
 // Route for stripe post request.
 $app->post('stripe', 'StripeController@postPaymentWithStripe');
 
