@@ -311,8 +311,6 @@ class WebhookController extends Controller{
 
 						$inner_folder_path_after = $inner_folder_path."/".$inner_file['name'];
 
-						dd($inner_folder_path_after);
-
 						if (!file_exists(base_path().$inner_folder_path_after)) {
 
 							mkdir(base_path().$inner_folder_path_after, 0777, true);
@@ -386,8 +384,6 @@ class WebhookController extends Controller{
 					{
 
 						$inner_folder_path_after = $inner_folder_path."/".$inner_file['name'];
-
-						dd($inner_folder_path_after);
 
 						if (!file_exists(base_path().$inner_folder_path_after)) {
 
