@@ -274,14 +274,9 @@ class WebhookController extends Controller{
 		  	try{
 
 				$inner_files = $client->listFolder($restricted_file_name);
-				$iterator = 1;
 
-			} catch (\Exception $e) {
-				$iterator = 0;
-			}
-
-			while($inner_files['has_more'] == 'true')
-			 {
+				while($inner_files['has_more'] == 'true')
+			 	{
 					    	$list_continue = $client->listFolderContinue($inner_files['cursor']);
 
 					    	$check_list_continue = count($list_continue['entries']);
@@ -292,7 +287,14 @@ class WebhookController extends Controller{
 					    			array_push($inner_files['entries'], $list_file);
 					    		}
 					    	}
-		     }
+		     	}
+				$iterator = 1;
+
+			} catch (\Exception $e) {
+				$iterator = 0;
+			}
+
+			
 
 		if($iterator == 1)
 		{
@@ -345,16 +347,8 @@ class WebhookController extends Controller{
 		  	try{
 
 				$inner_files = $client->listFolder($full_file_name);
-				$iterator = 1;
-
-			} catch (\Exception $e) {
-
-
-				$iterator = 0;
-			}
-
-			 while($inner_files['has_more'] == 'true')
-			 {
+				while($inner_files['has_more'] == 'true')
+			 	{
 					    	$list_continue = $client->listFolderContinue($inner_files['cursor']);
 
 					    	$check_list_continue = count($list_continue['entries']);
@@ -365,7 +359,15 @@ class WebhookController extends Controller{
 					    			array_push($inner_files['entries'], $list_file);
 					    		}
 					    	}
-		     }
+		     	}
+				$iterator = 1;
+
+			} catch (\Exception $e) {
+
+
+				$iterator = 0;
+			}
+
 
 		if($iterator == 1)
 		{
