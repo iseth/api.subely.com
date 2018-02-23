@@ -68,7 +68,7 @@ class SubsController extends Controller{
 	    	$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
 
 			//var_dump($filesystem->createDir($request->get('sub_domain')));
-			$filesystem->write($request->get('sub_domain') . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
+			$filesystem->write($request->get('sub_domain') . '.subely.me' . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
 			// var_dump($filesystem->createDir('/secure'));
 			// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
 		}
@@ -89,7 +89,7 @@ class SubsController extends Controller{
 	    	$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
 
 			//var_dump($filesystem->createDir($request->get('sub_domain')));
-			$filesystem->write($request->get('sub_domain') . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
+			$filesystem->write($request->get('sub_domain') . '.subely.me' . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
 			// var_dump($filesystem->createDir('/secure'));
 			// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
 		}
