@@ -91,18 +91,25 @@ class WebhookController extends Controller{
 			 if($user->status == 0)
 			 {
 
-			   	$path = $user->dbid;
+			 	$paths = DB::table('subs')->where('owner','=',$user->uid)->get();
+
+			 	$check_path_exists = count($paths);
+
+			 	if($check_path_exists != 0)
+			 	{
+
+			 	foreach ($paths as $path){
 
 			   	$filesystem = new Filesystem();
 
-			   	if (file_exists(base_path().'/public/dropbox-files/'.$path)) {
+			   	if (file_exists(base_path().'/public/dropbox-files/'.$path->sub_domain)) {
 
-			   		$filesystem->deleteDirectory(base_path().'/public/dropbox-files/'.$path);
+			   		$filesystem->deleteDirectory(base_path().'/public/dropbox-files/'.$path->sub_domain);
 				}
 
-			   	if (!file_exists(base_path().'/public/dropbox-files/'.$path)) {
+			   	if (!file_exists(base_path().'/public/dropbox-files/'.$path->sub_domain)) {
 
-			   		mkdir(base_path().'/public/dropbox-files/'.$path, 0777, true);
+			   		mkdir(base_path().'/public/dropbox-files/'.$path->sub_domain, 0777, true);
 				}
 
 			  
@@ -121,7 +128,7 @@ class WebhookController extends Controller{
 					{
 						// catch exception if folder do not exist
 							try {
-						        $files = $client->listFolder("/apps/subely");
+						        $files = $client->listFolder("/apps/subely/".$path->sub_domain);
 
 						        $restricted_path = 0;
 
@@ -129,7 +136,7 @@ class WebhookController extends Controller{
 						    } catch (\Exception $e) {
 						    	try{
 
-						    	   $files = $client->listFolder("");
+						    	   $files = $client->listFolder($path->sub_domain);
 
 						    	   $restricted_path = 1;
 
@@ -191,13 +198,13 @@ class WebhookController extends Controller{
 							    		if($file['.tag'] == "folder")
 							    		{
 
-							    			if (!file_exists(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'])) {
+							    			if (!file_exists(base_path().'/public/dropbox-files/'.$path->sub_domain.'/'.$file['name'])) {
 
-											mkdir(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'], 0777, true);
+											mkdir(base_path().'/public/dropbox-files/'.$path->sub_domain.'/'.$file['name'], 0777, true);
 											}
 
 
-							    			$inner_folder_path = '/public/dropbox-files/'.$path.'/'.$file['name'];
+							    			$inner_folder_path = '/public/dropbox-files/'.$path->sub_domain.'/'.$file['name'];
 
 							    			$restricted_file_name = "/".$file['name'];
 
@@ -214,7 +221,7 @@ class WebhookController extends Controller{
 
 							    		$download = $client->download($file['path_lower']);	
 
-										file_put_contents(base_path().'/public/dropbox-files/'.$path.'/'.$file['name'], $download);
+										file_put_contents(base_path().'/public/dropbox-files/'.$path->sub_domain.'/'.$file['name'], $download);
 
 										}
 										
@@ -228,6 +235,10 @@ class WebhookController extends Controller{
 							    ['cursor' => $files['cursor'],'status' => 1]
 							);
 						}
+
+					   }
+
+					  }
 					}
 				}
 
@@ -260,6 +271,20 @@ class WebhookController extends Controller{
 			} catch (\Exception $e) {
 				$iterator = 0;
 			}
+
+			while($inner_files['has_more'] == 'true')
+			 {
+					    	$list_continue = $client->listFolderContinue($inner_files['cursor']);
+
+					    	$check_list_continue = count($list_continue['entries']);
+
+					    	if($check_list_continue != 0)
+					    	{
+					    		foreach ($list_continue['entries'] as $list_file) {
+					    			array_push($inner_files['entries'], $list_file);
+					    		}
+					    	}
+		     }
 
 		if($iterator == 1)
 		{
@@ -319,6 +344,20 @@ class WebhookController extends Controller{
 
 				$iterator = 0;
 			}
+
+			 while($inner_files['has_more'] == 'true')
+			 {
+					    	$list_continue = $client->listFolderContinue($inner_files['cursor']);
+
+					    	$check_list_continue = count($list_continue['entries']);
+
+					    	if($check_list_continue != 0)
+					    	{
+					    		foreach ($list_continue['entries'] as $list_file) {
+					    			array_push($inner_files['entries'], $list_file);
+					    		}
+					    	}
+		     }
 
 		if($iterator == 1)
 		{
