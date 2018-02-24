@@ -122,7 +122,7 @@ class SubsController extends Controller{
 		  }
 		  else
 		  {
-		  	return response()->json('Your limit has been exceeded',429)
+		  	return response()->json('Your limit has been exceeded',429);
 		  }
 
 		}
