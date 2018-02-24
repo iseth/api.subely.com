@@ -122,13 +122,13 @@ class SubsController extends Controller{
 		  }
 		  else
 		  {
-		  	return response()->json('Your limit has been exceeded',429);
+		  	return response()->json('Your limit has been exceeded');
 		  }
 
 		}
 		else
 		{
-			return response()->json('You need to buy a package to create your folders',429);
+			return response()->json('You need to buy a package to create your folders');
 		}
 
 	}
