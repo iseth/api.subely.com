@@ -39,10 +39,9 @@ class SubsController extends Controller{
 		$this->validateRequest($request);
 
 		$subscription = DB::table('subscriptions')->where('user_id','=',$request->get('user_id'))->first();
-		$plan = DB::table('plans')->get();
 		if($subscription != null){
 
-		$plan = DB::table('plan')->where('id','=',$subscription->plan_id)->first();
+		$plan = DB::table('plans')->where('id','=',$subscription->plan_id)->first();
 
 		$total_subs = Subs::where('owner','=',$request->get('user_id'))->count();
 
