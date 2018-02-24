@@ -104,7 +104,7 @@ class StripeController extends Controller{
                         'description' => 'Subscribed to '.$plan_selected->name.' plan',
                     ]); */
 
-                     $subscription = $stripe->Subscriptions()->update($customer['id'],$subscription['id'],[
+                     $subscription = $stripe->Subscriptions()->update($subscription_exist->stripe_id,$subscription_exist->stripe_subscription_id,[
                         'plan' => $plan_selected->name,
                     ]);
 
