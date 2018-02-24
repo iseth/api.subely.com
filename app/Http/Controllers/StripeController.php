@@ -88,6 +88,9 @@ class StripeController extends Controller{
                 ]);
 
 
+                dd($subscription['status']);
+
+
               /* $charge = $stripe->charges()->create([
                     'customer' => $customer['id'],
                     'currency' => 'USD',
