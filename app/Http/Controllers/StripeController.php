@@ -79,18 +79,17 @@ class StripeController extends Controller{
                 $customer = $stripe->Customers()->create([
                     'source' => $token['id'],
                     'email' =>  $user->email,
-                    'plan' =>   $plan_selected->name,
                     'account_balance' => $plan_selected->price,
                     'description' => 'Subscribed to '.$plan_selected->price.' plan',
                 ]);
 
-               /* $charge = $stripe->charges()->create([
+               $charge = $stripe->charges()->create([
                     'customer' => $customer['id'],
                     'currency' => 'USD',
                     'amount'   => $plan_selected->price,
                     'description' => $plan_selected->price.' plan',
-                ]); */
-                if($customer['status'] == 'succeeded') {
+                ]);
+                if($charge['status'] == 'succeeded') {
 
                     $start_time = Carbon::now();
                     $end_time = $start_time->addMonth();
