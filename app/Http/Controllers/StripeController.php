@@ -60,7 +60,7 @@ class StripeController extends Controller{
 
         $subscription_exist = DB::table('subscriptions')->where('user_id','=',$request->user_id)->first();
 
-        $user_subs_created = Subs::where('owner','=',$request->uid)->count();
+        $user_subs_created = Subs::where('owner','=',$request->user_id)->count();
 
         if($user_subs_created <= $plan_selected->folders){
 
