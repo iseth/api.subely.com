@@ -45,7 +45,7 @@ class SubsController extends Controller{
 
 		$total_subs = Subs::where('owner','=',$request->get('user_id'))->count();
 
-		if($total_subs <= $plan->folders)
+		if($total_subs < $plan->folders)
 		{
 			$sub_id = Uuid::uuid4();
 
