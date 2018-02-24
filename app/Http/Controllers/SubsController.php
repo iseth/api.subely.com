@@ -39,7 +39,7 @@ class SubsController extends Controller{
 		$this->validateRequest($request);
 
 		$subscription = DB::table('subscriptions')->where('user_id','=',$request->get('user_id'))->first();
-		$plan = DB::table('plan')->get();
+		$plan = DB::table('plans')->get();
 		if($subscription != null){
 
 		$plan = DB::table('plan')->where('id','=',$subscription->plan_id)->first();
