@@ -55,7 +55,7 @@ class StripeController extends Controller{
             'user_id' => 'required',
         ]);
 
-        $user = DB::table('dbx_users')->where('uid','=',$request->uid)->first();
+        $user = DB::table('dbx_users')->where('uid','=',$request->user_id)->first();
         
         $input = $request->all();
         if ($validator->passes()) {           
