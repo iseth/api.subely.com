@@ -37,78 +37,99 @@ class SubsController extends Controller{
 
 		$this->validateRequest($request);
 
-		$sub_id = Uuid::uuid4();
+		$subscription = DB::table('subscriptions')->where('user_id','=',$request->get('user_id'))->first();
+		$plan = DB::table('plan')->get();
+		if($subscription != null){
 
-		$sub = Subs::create([
-					'sub_id'							=> 		$sub_id,
-					'owner' 							=> 		$request->get('user_id'),
-					'sub_domain' 					=> 		$request->get('sub_domain') .'.subely.me',
-					'domain' 							=> 		'domain',
-					'status'							=> 		'1',
-					'provider' 						=> 		$request->get('provider'),
-					'www' 								=> 		$request->get('www') .'.subely.me',
-					'host'								=> 		'001',
-					'isActive' 						=> 		'0',
-				]);
+		$plan = DB::table('plan')->where('id','=',$subscription->plan_id)->first();
 
-		if (app()->environment('local')) {
+		$total_subs = Subs::where('owner','=',$request->get('user_id'))->count();
 
-			$directory = base_path().'/public/dropbox-files/'. $request->get('sub_domain') . '.subely.me';
-			if (!file_exists($directory)) {
-				$success = mkdir($directory);
+		if($total_subs <= $plan->folders)
+		{
+			$sub_id = Uuid::uuid4();
+
+			$sub = Subs::create([
+						'sub_id'							=> 		$sub_id,
+						'owner' 							=> 		$request->get('user_id'),
+						'sub_domain' 					=> 		$request->get('sub_domain') .'.subely.me',
+						'domain' 							=> 		'domain',
+						'status'							=> 		'1',
+						'provider' 						=> 		$request->get('provider'),
+						'www' 								=> 		$request->get('www') .'.subely.me',
+						'host'								=> 		'001',
+						'isActive' 						=> 		'0',
+					]);
+
+			if (app()->environment('local')) {
+
+				$directory = base_path().'/public/dropbox-files/'. $request->get('sub_domain') . '.subely.me';
+				if (!file_exists($directory)) {
+					$success = mkdir($directory);
+				}
+
+				$dbxUserController = new dbxUserController;
+				$dbxaccessToken = $dbxUserController->getToken($request->get('user_id'));
+
+				$client = new Client($dbxaccessToken);
+		    	$adapter = new DropboxAdapter($client);
+		    	$filesystem = new Filesystem($adapter);
+
+		    	try{
+
+		    		$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
+					$filesystem->write($request->get('sub_domain') . '.subely.me' . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
+
+		    	} catch (\Exception $e) {
+
+		    	}
+
+
+
+				//var_dump($filesystem->createDir($request->get('sub_domain')));
+				// var_dump($filesystem->createDir('/secure'));
+				// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
 			}
 
-			$dbxUserController = new dbxUserController;
-			$dbxaccessToken = $dbxUserController->getToken($request->get('user_id'));
+			if (app()->environment('production', 'staging')) {
+				$directory = base_path().'/public/dropbox-files/'. $request->get('sub_domain') . '.subely.me';
+				if (!file_exists($directory)) {
+					$success = mkdir($directory);
+				}
 
-			$client = new Client($dbxaccessToken);
-	    	$adapter = new DropboxAdapter($client);
-	    	$filesystem = new Filesystem($adapter);
+				$dbxUserController = new dbxUserController;
+				$dbxaccessToken = $dbxUserController->getToken($request->get('user_id'));
 
-	    	try{
-
-	    		$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
-				$filesystem->write($request->get('sub_domain') . '.subely.me' . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
-
-	    	} catch (\Exception $e) {
-
-	    	}
+				$client = new Client($dbxaccessToken);
+		    	$adapter = new DropboxAdapter($client);
+		    	$filesystem = new Filesystem($adapter);
 
 
+		    	try{
 
-			//var_dump($filesystem->createDir($request->get('sub_domain')));
-			// var_dump($filesystem->createDir('/secure'));
-			// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
-		}
+		    		$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
+					$filesystem->write($request->get('sub_domain') . '.subely.me' . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
 
-		if (app()->environment('production', 'staging')) {
-			$directory = base_path().'/public/dropbox-files/'. $request->get('sub_domain') . '.subely.me';
-			if (!file_exists($directory)) {
-				$success = mkdir($directory);
+		    	} catch (\Exception $e) {
+
+		    	}
+
+				// var_dump($filesystem->createDir('/secure'));
+				// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
 			}
 
-			$dbxUserController = new dbxUserController;
-			$dbxaccessToken = $dbxUserController->getToken($request->get('user_id'));
+			return $this->success("The sub with with id {$sub->sub_id} has been created".$success, 201);
+		  }
+		  else
+		  {
+		  	return response()->json('Your limit has been exceeded',429)
+		  }
 
-			$client = new Client($dbxaccessToken);
-	    	$adapter = new DropboxAdapter($client);
-	    	$filesystem = new Filesystem($adapter);
-
-
-	    	try{
-
-	    		$filesystem->createDir($request->get('sub_domain') . '.subely.me',[]);
-				$filesystem->write($request->get('sub_domain') . '.subely.me' . '/index.php', '<?php echo(\'<h1>Subely Hosting</h1><br>Just Upload Your Files Here\');');
-
-	    	} catch (\Exception $e) {
-
-	    	}
-
-			// var_dump($filesystem->createDir('/secure'));
-			// $filesystem->write('secure/README.md', '<h1>Subely Hosting</h1><br>This area is secure from the world.');
 		}
-
-		return $this->success("The sub with with id {$sub->sub_id} has been created".$success, 201);
+		else
+		{
+			return response()->json('You need to buy a package to create your folders',429);
+		}
 
 	}
 
