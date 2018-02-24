@@ -10,6 +10,7 @@ use Session;
 use Redirect;
 use Input;
 use App\User;
+use App\Subs;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Stripe\Error\Card;
 use DB;
@@ -59,8 +60,10 @@ class StripeController extends Controller{
 
         $subscription_exist = DB::table('subscriptions')->where('user_id','=',$request->user_id)->first();
 
+        $user_subs_created = Subs::where('owner','=',$request->uid)->count();
 
-        
+        if($user_subs_created <= $plan_selected->folders){
+
         $input = $request->all();
         if ($validator->passes()) {           
             $input = array_except($input,array('_token'));            
@@ -164,10 +167,17 @@ class StripeController extends Controller{
                // return redirect()->route('stripform');
             	return response()->json($e->getMessage());
             }
-        }
-       // \Session::put('error','All fields are required!!');
-       // return redirect()->route('stripform');
-        return response()->json('All fields are required!!');
+
+           }
+           // \Session::put('error','All fields are required!!');
+           // return redirect()->route('stripform');
+            return response()->json('All fields are required!!');
+
+           }
+           else
+           {
+              return response()->json('Please delete extra created folders to upgrade to this package');
+           }
 
         }
         else
