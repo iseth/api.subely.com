@@ -78,8 +78,6 @@ class StripeController extends Controller{
                     'amount'   => $plan_selected->price,
                     'description' => 'Add in wallet',
                 ]);
-
-                dd($charge);
                 if($charge['status'] == 'succeeded') {
 
                     $start_time = Carbon::now();
@@ -88,7 +86,7 @@ class StripeController extends Controller{
                     DB::table('subscriptions')->insert([
                         'user_id' => $request->user_id,
                         'plan_id' => $plan_selected->id,
-                        'charge_id' => $charge->id,
+                        'charge_id' => $charge['id'],
                         'started_at' => $start_time,
                         'ends_at' => $end_time,
                     ]);
