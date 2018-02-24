@@ -169,6 +169,8 @@ class WebhookController extends Controller{
 					    			array_push($files['entries'], $list_file);
 					    		}
 					    	}
+
+					    	$files['has_more'] = $list_continue['has_more'];
 					    }
 
 					  }
@@ -287,6 +289,7 @@ class WebhookController extends Controller{
 					    			array_push($inner_files['entries'], $list_file);
 					    		}
 					    	}
+					$inner_files['has_more'] = $list_continue['has_more'];
 		     	}
 				$iterator = 1;
 
@@ -359,6 +362,7 @@ class WebhookController extends Controller{
 					    			array_push($inner_files['entries'], $list_file);
 					    		}
 					    	}
+					$inner_files['has_more'] = $list_continue['has_more'];
 		     	}
 				$iterator = 1;
 
