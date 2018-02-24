@@ -57,7 +57,7 @@ class StripeController extends Controller{
 
         $user = DB::table('dbx_users')->where('uid','=',$request->user_id)->first();
 
-        $subscription_exist = DB::table('subscriptions')->where('uid','=',$request->user_id)->first();
+        $subscription_exist = DB::table('subscriptions')->where('user_id','=',$request->user_id)->first();
 
 
         
@@ -136,7 +136,7 @@ class StripeController extends Controller{
                         $start_time = Carbon::now();
                         $end_time = $start_time->addMonth();
 
-                        DB::table('subscriptions')->where('uid','=',$request->user_id)->update([
+                        DB::table('subscriptions')->where('user_id','=',$request->user_id)->update([
                             'plan_id' => $plan_selected->id,
                             'stripe_subscription_id' => $subscription['id'],
                             'started_at' => $start_time,
