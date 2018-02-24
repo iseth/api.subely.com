@@ -78,6 +78,8 @@ class StripeController extends Controller{
                     'amount'   => $plan_selected->price,
                     'description' => 'Add in wallet',
                 ]);
+
+                dd($charge);
                 if($charge['status'] == 'succeeded') {
 
                     $start_time = Carbon::now();
