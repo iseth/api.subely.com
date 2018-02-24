@@ -79,7 +79,6 @@ class StripeController extends Controller{
                 $customer = $stripe->Customers()->create([
                     'source' => $token['id'],
                     'email' =>  $user->email,
-                    'account_balance' => $plan_selected->price,
                     'description' => 'Subscribed to '.$plan_selected->name.' plan',
                 ]);
 
