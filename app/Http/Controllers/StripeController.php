@@ -80,16 +80,25 @@ class StripeController extends Controller{
                     'source' => $token['id'],
                     'email' =>  $user->email,
                     'account_balance' => $plan_selected->price,
-                    'description' => 'Subscribed to '.$plan_selected->price.' plan',
+                    'description' => 'Subscribed to '.$plan_selected->name.' plan',
                 ]);
 
-               $charge = $stripe->charges()->create([
+
+                $subscription = $stripe->Subscriptions()->create([
+                    'customer' => $customer['id'],
+                    'plan'  =>  $plan_selected->name,
+                    'billing' => "send_invoice",
+                    'description' => 'Subscribed to '.$plan_selected->name.' plan',
+                ]);
+
+
+              /* $charge = $stripe->charges()->create([
                     'customer' => $customer['id'],
                     'currency' => 'USD',
                     'amount'   => $plan_selected->price,
-                    'description' => $plan_selected->price.' plan',
-                ]);
-                if($charge['status'] == 'succeeded') {
+                    'description' => $plan_selected->name.' plan',
+                ]); */
+                if($customer['status'] == 'succeeded') {
 
                     $start_time = Carbon::now();
                     $end_time = $start_time->addMonth();
@@ -97,7 +106,7 @@ class StripeController extends Controller{
                     DB::table('subscriptions')->insert([
                         'user_id' => $request->user_id,
                         'plan_id' => $plan_selected->id,
-                        'charge_id' => $customer['id'],
+                        'stripe_id' => $customer['id'],
                         'started_at' => $start_time,
                         'ends_at' => $end_time,
                     ]);
