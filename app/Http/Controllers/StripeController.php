@@ -98,7 +98,7 @@ class StripeController extends Controller{
                     'amount'   => $plan_selected->price,
                     'description' => $plan_selected->name.' plan',
                 ]); */
-                if($customer['status'] == 'succeeded') {
+                if($subscription['status'] == 'succeeded') {
 
                     $start_time = Carbon::now();
                     $end_time = $start_time->addMonth();
