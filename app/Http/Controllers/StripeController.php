@@ -77,7 +77,7 @@ class StripeController extends Controller{
                 }
 
                 $customer = $stripe->Customers()->create([
-                    'source' => $token,
+                    'source' => $token['id'],
                     'email' =>  $user->email,
                     'plan' =>   $plan_selected->name,
                     'account_balance' => $plan_selected->price,
