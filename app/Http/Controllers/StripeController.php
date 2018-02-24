@@ -89,7 +89,6 @@ class StripeController extends Controller{
                         'plan' => $plan_selected->name,
                         ],
                     'billing' => 'send_invoice',
-                    'description' => 'Subscribed to '.$plan_selected->name.' plan',
                 ]);
 
 
