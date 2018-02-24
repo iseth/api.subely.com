@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Validator;
 use URL;
 use Session;
@@ -12,6 +13,7 @@ use App\User;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Stripe\Error\Card;
 use DB;
+
 
 
 class StripeController extends Controller{
@@ -49,6 +51,7 @@ class StripeController extends Controller{
             'ccExpiryMonth' => 'required',
             'ccExpiryYear' => 'required',
             'cvvNumber' => 'required',
+            'user_id' => 'required',
         ]);
         
         $input = $request->all();
@@ -76,12 +79,16 @@ class StripeController extends Controller{
                     'description' => 'Add in wallet',
                 ]);
                 if($charge['status'] == 'succeeded') {
-                    /**
-                    * Write Here Your Database insert logic.
-                    */
-                   // \Session::put('success','Money add successfully in wallet');
-                   // return redirect()->route('stripform');
 
+                    $start_time = Carbon::now();
+                    $end_time = $start_time->addMonth();
+
+                    DB::table('subscriptions')->insert([
+                        'user_id' => $request->user_id,
+                        'plan_id' => $plan_selected->id,
+                        'started_at' => $current_time,
+                        'ends_at' => $end_time,
+                    ]);
                     return response()->json('Payment Successful');
                 } else {
                    // \Session::put('error','Money not add in wallet!!');
