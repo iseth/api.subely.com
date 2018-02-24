@@ -86,7 +86,7 @@ class StripeController extends Controller{
                     DB::table('subscriptions')->insert([
                         'user_id' => $request->user_id,
                         'plan_id' => $plan_selected->id,
-                        'started_at' => $current_time,
+                        'started_at' => $start_time,
                         'ends_at' => $end_time,
                     ]);
                     return response()->json('Payment Successful');
