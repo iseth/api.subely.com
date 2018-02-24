@@ -76,7 +76,7 @@ class StripeController extends Controller{
                     return response()->json('The Stripe Token was not generated correctly');
                 }
 
-                $customer = $stripe->customer()->create([
+                $customer = $stripe->Customers()->create([
                     'source' => $token,
                     'email' =>  $user->email,
                     'plan' =>   $plan_selected->name,
