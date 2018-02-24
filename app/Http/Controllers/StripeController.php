@@ -85,6 +85,8 @@ class StripeController extends Controller{
 
                 $subscription = $stripe->Subscriptions()->create($customer['id'],[
                     'plan' => $plan_selected->name,
+                    'days_until_due' => 5,
+                    'billing' => 'send_invoice',
                 ]);
 
 
@@ -96,8 +98,8 @@ class StripeController extends Controller{
                 ]); */
                 if($subscription['status'] == 'active') {
 
-                    $start_time = Carbon::now();
-                    $end_time = $start_time->addMonth();
+                    $start_time = Carbon::parse($subscription['current_period_start']);
+                    $end_time = Carbon::parse($subscription['current_period_end']);
 
                     DB::table('subscriptions')->insert([
                         'user_id' => $request->user_id,
