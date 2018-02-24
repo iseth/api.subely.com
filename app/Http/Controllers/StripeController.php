@@ -86,8 +86,13 @@ class StripeController extends Controller{
                 $subscription = $stripe->Subscriptions()->create([
                     'customer' => $customer['id'],
                     'items'  =>  [ 
-                        'plan' => $plan_selected->name,
+                        [
+                            'plan' => $plan_selected->name,
                         ],
+
+                        ],
+                    'billing' => 'send_invoice',
+                    'description' => 'Subscribed to '.$plan_selected->name.' plan',
                 ]);
 
 
