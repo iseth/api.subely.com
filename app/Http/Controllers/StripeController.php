@@ -88,7 +88,6 @@ class StripeController extends Controller{
                     'items'  =>  [ 
                         'plan' => $plan_selected->name,
                         ],
-                    'billing' => 'send_invoice',
                 ]);
 
 
