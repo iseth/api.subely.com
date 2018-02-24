@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\FlysystemDropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
+use DB;
 
 class SubsController extends Controller{
 
