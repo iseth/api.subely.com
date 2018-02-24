@@ -56,6 +56,10 @@ class StripeController extends Controller{
         ]);
 
         $user = DB::table('dbx_users')->where('uid','=',$request->user_id)->first();
+
+        $subscription_exist = DB::table('subscriptions')->where('uid','=',$request->user_id)->first();
+
+
         
         $input = $request->all();
         if ($validator->passes()) {           
@@ -76,20 +80,35 @@ class StripeController extends Controller{
                     return response()->json('The Stripe Token was not generated correctly');
                 }
 
-                $customer = $stripe->Customers()->create([
-                    'source' => $token['id'],
-                    'email' =>  $user->email,
-                    'description' => 'Subscribed to '.$plan_selected->name.' plan',
-                ]);
+               if($subscription_exist == null)
+                {
+
+                    $customer = $stripe->Customers()->create([
+                        'source' => $token['id'],
+                        'email' =>  $user->email,
+                        'description' => 'Subscribed to '.$plan_selected->name.' plan',
+                    ]);
 
 
-                $subscription = $stripe->Subscriptions()->create($customer['id'],[
-                    'plan' => $plan_selected->name,
-                    'days_until_due' => 5,
-                    'billing' => 'send_invoice',
-                ]);
+                    $subscription = $stripe->Subscriptions()->create($customer['id'],[
+                        'plan' => $plan_selected->name,
+                    ]);
 
+                }
+                else
+                {
 
+                   /* $customer = $stripe->Customers()->update($subscription_exist->stripe_id,[
+                        'source' => $token['id'],
+                        'email' =>  $user->email,
+                        'description' => 'Subscribed to '.$plan_selected->name.' plan',
+                    ]); */
+
+                     $subscription = $stripe->Subscriptions()->update($customer['id'],$subscription['id'],[
+                        'plan' => $plan_selected->name,
+                    ]);
+
+                }
               /* $charge = $stripe->charges()->create([
                     'customer' => $customer['id'],
                     'currency' => 'USD',
@@ -98,16 +117,33 @@ class StripeController extends Controller{
                 ]); */
                 if($subscription['status'] == 'active') {
 
-                    $start_time = Carbon::now();
-                    $end_time = $start_time->addMonth();
+                   if($subscription_exist == null)
+                   {
+                        $start_time = Carbon::now();
+                        $end_time = $start_time->addMonth();
 
-                    DB::table('subscriptions')->insert([
-                        'user_id' => $request->user_id,
-                        'plan_id' => $plan_selected->id,
-                        'stripe_id' => $customer['id'],
-                        'started_at' => $start_time,
-                        'ends_at' => $end_time,
-                    ]);
+                        DB::table('subscriptions')->insert([
+                            'user_id' => $request->user_id,
+                            'plan_id' => $plan_selected->id,
+                            'stripe_id' => $customer['id'],
+                            'stripe_subscription_id' => $subscription['id'],
+                            'started_at' => $start_time,
+                            'ends_at' => $end_time,
+                        ]);
+                    }
+                    else
+                    {
+                        $start_time = Carbon::now();
+                        $end_time = $start_time->addMonth();
+
+                        DB::table('subscriptions')->where('uid','=',$request->user_id)->update([
+                            'plan_id' => $plan_selected->id,
+                            'stripe_subscription_id' => $subscription['id'],
+                            'started_at' => $start_time,
+                            'ends_at' => $end_time,
+                        ]);
+
+                    }
                     return response()->json('Payment Successful');
                 } else {
                    // \Session::put('error','Money not add in wallet!!');
