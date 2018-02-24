@@ -46,6 +46,7 @@ class StripeController extends Controller{
 
         if($verify_plan == true){
 
+
         $validator = Validator::make($request->all(), [
             'card_no' => 'required',
             'ccExpiryMonth' => 'required',
@@ -53,6 +54,8 @@ class StripeController extends Controller{
             'cvvNumber' => 'required',
             'user_id' => 'required',
         ]);
+
+        $user = DB::table('dbx_users')->where('uid','=',$request->uid)->first();
         
         $input = $request->all();
         if ($validator->passes()) {           
@@ -72,13 +75,22 @@ class StripeController extends Controller{
                     //return redirect()->route('stripform');
                     return response()->json('The Stripe Token was not generated correctly');
                 }
-                $charge = $stripe->charges()->create([
-                    'card' => $token['id'],
+
+                $customer = $stripe->customer()->create([
+                    'source' => $token,
+                    'email' =>  $user->email,
+                    'plan' =>   $plan_selected->name,
+                    'account_balance' => $plan_selected->price,
+                    'description' => 'Subscribed to '.$plan_selected->price.' plan',
+                ]);
+
+               /* $charge = $stripe->charges()->create([
+                    'customer' => $customer['id'],
                     'currency' => 'USD',
                     'amount'   => $plan_selected->price,
-                    'description' => 'Add in wallet',
-                ]);
-                if($charge['status'] == 'succeeded') {
+                    'description' => $plan_selected->price.' plan',
+                ]); */
+                if($customer['status'] == 'succeeded') {
 
                     $start_time = Carbon::now();
                     $end_time = $start_time->addMonth();
@@ -86,7 +98,7 @@ class StripeController extends Controller{
                     DB::table('subscriptions')->insert([
                         'user_id' => $request->user_id,
                         'plan_id' => $plan_selected->id,
-                        'charge_id' => $charge['id'],
+                        'charge_id' => $customer['id'],
                         'started_at' => $start_time,
                         'ends_at' => $end_time,
                     ]);
