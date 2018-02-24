@@ -11,6 +11,7 @@ use Input;
 use App\User;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Stripe\Error\Card;
+use DB;
 
 
 class StripeController extends Controller{
@@ -18,20 +19,36 @@ class StripeController extends Controller{
 
 	public function __construct(){
 
-		//$this->middleware('oauth', ['except' => ['verify']]);
-	// $this->middleware('authorize:' . __CLASS__, ['except' => ['verify']]);
+      //$this->middleware('oauth');
+	  // $this->middleware('authorize:' . __CLASS__);
 	}
 
 
 	public function postPaymentWithStripe(Request $request)
     {
 
+        $plans = DB::table('plans')->get();
+
+        $verify_plan = false;
+
+        $plan_selected = null;
+
+        foreach ($plans as $plan) {
+            if($plan->name == $request->package_name)
+            {
+                $verify_plan = true;
+                $plan_selected = $plan;
+            }
+            
+        }
+
+        if($verify_plan == true){
+
         $validator = Validator::make($request->all(), [
             'card_no' => 'required',
             'ccExpiryMonth' => 'required',
             'ccExpiryYear' => 'required',
             'cvvNumber' => 'required',
-            'amount' => 'required',
         ]);
         
         $input = $request->all();
@@ -55,7 +72,7 @@ class StripeController extends Controller{
                 $charge = $stripe->charges()->create([
                     'card' => $token['id'],
                     'currency' => 'USD',
-                    'amount'   => $request->get('amount'),
+                    'amount'   => $plan_selected->price,
                     'description' => 'Add in wallet',
                 ]);
                 if($charge['status'] == 'succeeded') {
@@ -89,6 +106,12 @@ class StripeController extends Controller{
        // \Session::put('error','All fields are required!!');
        // return redirect()->route('stripform');
         return response()->json('All fields are required!!');
+
+        }
+        else
+        {
+            return response()->json('This plan does not exist');
+        }
     }    
 
 
