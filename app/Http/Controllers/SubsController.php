@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\FlysystemDropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client;
+use Carbon\Carbon;
 use DB;
 
 class SubsController extends Controller{
@@ -39,7 +40,16 @@ class SubsController extends Controller{
 		$this->validateRequest($request);
 
 		$subscription = DB::table('subscriptions')->where('user_id','=',$request->get('user_id'))->first();
+
+
 		if($subscription != null){
+
+		$current_time = Carbon::now();
+
+		$package_end_time = Carbon::parse($subscription->ends_at);
+
+	    if($current_time <= $package_end_time)
+	    {
 
 		$plan = DB::table('plans')->where('id','=',$subscription->plan_id)->first();
 
@@ -124,6 +134,12 @@ class SubsController extends Controller{
 		  {
 		  	return response()->json('Your limit has been exceeded');
 		  }
+
+		 }
+		 else
+		 {
+		 	return response()->json('Your package has been expired');
+		 }
 
 		}
 		else
