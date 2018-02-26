@@ -123,7 +123,7 @@ class StripeController extends Controller{
                    if($subscription_exist == null)
                    {
                         $start_time = Carbon::now();
-                        $end_time = $start_time->addMonth();
+                        $end_time = Carbon::now()->addMonth();
 
                         DB::table('subscriptions')->insert([
                             'user_id' => $request->user_id,
@@ -137,7 +137,7 @@ class StripeController extends Controller{
                     else
                     {
                         $start_time = Carbon::now();
-                        $end_time = $start_time->addMonth();
+                        $end_time = Carbon::now()->addMonth();
 
                         dd($start_time."  ".$end_time);
 
