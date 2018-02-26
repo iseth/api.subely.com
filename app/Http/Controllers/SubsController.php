@@ -291,7 +291,9 @@ class SubsController extends Controller{
 
 	public function verify($sub_domain){
 
-		$sub = Subs::where('sub_domain', '=', $sub_domain)->first();
+		$check_sub_domain = $sub_domain.'.subely.me';
+
+		$sub = Subs::where('sub_domain', '=', $check_sub_domain)->first();
 
 		if(!$sub){
 				return $this->success("The sub is avalible", 200);
