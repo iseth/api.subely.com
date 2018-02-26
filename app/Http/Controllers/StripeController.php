@@ -139,8 +139,6 @@ class StripeController extends Controller{
                         $start_time = Carbon::now();
                         $end_time = Carbon::now()->addMonth();
 
-                        dd($start_time."  ".$end_time);
-
                         DB::table('subscriptions')->where('user_id','=',$request->user_id)->update([
                             'plan_id' => $plan_selected->id,
                             'stripe_subscription_id' => $subscription['id'],
