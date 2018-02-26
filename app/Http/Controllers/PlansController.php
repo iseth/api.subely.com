@@ -13,7 +13,7 @@ class PlansController extends Controller{
 		$all_plans = DB::table('plans')->get();
 		$subscription_exist = DB::table('subscriptions')->where('user_id','=',$request->get('uid'));
 
-		$check_plan = null;
+		$check_plan = 0;
 
 		if($subscription_exist != null)
 		{
