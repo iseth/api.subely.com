@@ -17,7 +17,7 @@ class PlansController extends Controller{
 
 		if($subscription_exist != null)
 		{
-			$check_plan = DB::table('plans')->where('plan_id','=',$subscription_exist->plan_id)->first();
+			$check_plan = DB::table('plans')->where('id','=',$subscription_exist->plan_id)->first();
 		}
 
 		$plans['plans'] = $all_plans;
