@@ -11,7 +11,7 @@ class PlansController extends Controller{
 
 		$plans = [];
 		$all_plans = DB::table('plans')->get();
-		$subscription_exist = DB::table('subscriptions')->where('user_id','=',$request->get('uid'));
+		$subscription_exist = DB::table('subscriptions')->where('user_id','=',$request->get('uid'))->first();
 
 		$check_plan = 0;
 
