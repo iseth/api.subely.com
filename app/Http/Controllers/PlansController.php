@@ -8,9 +8,9 @@ class PlansController extends Controller{
 
 	public function getAllPlans(Request $request)
 	{
-		$plans = DB::table('plans')->get();
 
-
+		$plans = [];
+		$all_plans = DB::table('plans')->get();
 		$subscription_exist = DB::table('subscriptions')->where('user_id','=',$request->get('uid'));
 
 		$check_plan = null;
@@ -20,7 +20,7 @@ class PlansController extends Controller{
 			$check_plan = DB::table('plans')->where('plan_id','=',$subscription_exist);
 		}
 
-		$plans['plans'] = $plans;
+		$plans['plans'] = $all_plans;
 
 		$plans['check_plan'] = $check_plan;
 		
